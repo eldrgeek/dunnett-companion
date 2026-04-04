@@ -10,170 +10,262 @@
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--burgundy:#6B1D2A;--burgundy-deep:#4A0E1C;--gold:#C9A84C;--gold-light:#E8D48B;--cream:#FDF8F0;--cream-dark:#F0E6D3;--ink:#2A1A1A;--ink-light:#5A3A3A}
 html,body{height:100%;font-family:'EB Garamond',serif;background:var(--cream)}
-
-/* NAV */
 .top-nav{background:var(--burgundy-deep);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:0;right:0;z-index:1000;box-shadow:0 2px 12px rgba(0,0,0,0.3)}
 .nav-title{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);letter-spacing:1px;font-weight:700}
 .nav-links{display:flex;gap:24px}
 .nav-links a{font-family:'Cormorant Garamond',serif;color:var(--gold-light);text-decoration:none;font-size:15px;letter-spacing:1px;text-transform:uppercase;opacity:0.8;transition:opacity 0.2s}
 .nav-links a:hover,.nav-links a.active{opacity:1;border-bottom:1px solid var(--gold)}
 .nav-home{font-size:18px;text-decoration:none;margin-right:8px}
-
-/* LAYOUT */
 .app-container{display:flex;height:100vh;padding-top:50px}
 #map{flex:1;z-index:1}
-
-/* SIDEBAR */
-.sidebar{width:280px;background:white;border-left:1px solid var(--cream-dark);padding:24px;overflow-y:auto;z-index:2;box-shadow:-2px 0 12px rgba(0,0,0,0.05);transition:transform 0.3s ease}
+.sidebar{width:300px;background:white;border-left:1px solid var(--cream-dark);padding:20px;overflow-y:auto;z-index:2;box-shadow:-2px 0 12px rgba(0,0,0,0.05);transition:transform 0.3s ease}
 .sidebar h2{font-family:'Playfair Display',serif;font-size:18px;color:var(--burgundy);margin-bottom:4px}
-.sidebar .subtitle{font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--ink-light);font-style:italic;margin-bottom:20px}
-.book-filter{margin-bottom:12px;display:flex;align-items:flex-start;gap:8px;padding:8px;border-radius:4px;cursor:pointer;transition:background 0.2s}
+.sidebar .subtitle{font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--ink-light);font-style:italic;margin-bottom:16px}
+.book-filter{margin-bottom:6px;display:flex;align-items:flex-start;gap:8px;padding:6px 8px;border-radius:4px;cursor:pointer;transition:background 0.2s}
 .book-filter:hover{background:var(--cream)}
-.book-filter input{margin-top:4px;accent-color:var(--burgundy)}
-.book-filter .book-color{width:12px;height:12px;border-radius:50%;margin-top:5px;flex-shrink:0}
-.book-filter .book-info{flex:1}
-.book-filter .book-title{font-family:'Cormorant Garamond',serif;font-size:14px;font-weight:600;color:var(--ink);line-height:1.3}
-.book-filter .book-dates{font-size:12px;color:var(--ink-light);font-style:italic}
-
+.book-filter input[type=checkbox]{margin-top:4px;accent-color:var(--burgundy)}
+.book-color{width:12px;height:12px;border-radius:50%;margin-top:5px;flex-shrink:0}
+.book-info{flex:1}
+.book-title{font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:600;color:var(--ink);line-height:1.3}
+.book-dates{font-size:11px;color:var(--ink-light);font-style:italic}
+.journey-btn{margin-top:4px;font-family:'Cormorant Garamond',serif;font-size:11px;background:none;border:1px solid var(--cream-dark);color:var(--ink-light);padding:2px 8px;border-radius:3px;cursor:pointer;transition:all 0.2s}
+.journey-btn:hover{background:var(--burgundy);color:white;border-color:var(--burgundy)}
+.journey-btn.active{background:var(--burgundy);color:white;border-color:var(--burgundy)}
+.section-label{font-family:'Cormorant Garamond',serif;font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--gold);margin:16px 0 8px;border-top:1px solid var(--cream-dark);padding-top:12px}
+.legend-note{font-family:'EB Garamond',serif;font-size:12px;color:var(--ink-light);line-height:1.5;margin-top:12px;padding:10px;background:var(--cream);border-radius:4px}
 .sidebar-toggle{display:none;position:fixed;bottom:20px;right:20px;z-index:1001;background:var(--burgundy);color:var(--gold);border:none;width:48px;height:48px;border-radius:50%;font-size:20px;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,0.3)}
-
-/* FOOTER */
-.map-footer{position:fixed;bottom:0;left:0;right:280px;text-align:center;padding:6px;background:rgba(253,248,240,0.9);border-top:1px solid var(--cream-dark);font-family:'Cormorant Garamond',serif;font-size:12px;color:var(--ink-light);font-style:italic;z-index:500}
-
-/* LEAFLET POPUP CUSTOM */
+.map-footer{position:fixed;bottom:0;left:0;right:300px;text-align:center;padding:6px;background:rgba(253,248,240,0.92);border-top:1px solid var(--cream-dark);font-family:'Cormorant Garamond',serif;font-size:12px;color:var(--ink-light);font-style:italic;z-index:500}
 .leaflet-popup-content-wrapper{border-radius:4px;border:1px solid var(--gold);box-shadow:0 4px 20px rgba(0,0,0,0.15)}
-.leaflet-popup-content{font-family:'EB Garamond',serif;font-size:15px;line-height:1.5;color:var(--ink)}
-.popup-title{font-family:'Playfair Display',serif;font-size:17px;color:var(--burgundy);margin-bottom:6px;font-weight:600}
-.popup-books{font-family:'Cormorant Garamond',serif;font-size:12px;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.leaflet-popup-content{font-family:'EB Garamond',serif;font-size:15px;line-height:1.5;color:var(--ink);margin:12px 16px}
+.popup-title{font-family:'Playfair Display',serif;font-size:17px;color:var(--burgundy);margin-bottom:4px;font-weight:600}
+.popup-books{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}
+.popup-book-tag{font-family:'Cormorant Garamond',serif;font-size:10px;padding:2px 6px;border-radius:2px;color:white;letter-spacing:0.5px}
 .popup-desc{font-size:14px;color:var(--ink-light);line-height:1.5}
-
-/* MOBILE */
-@media(max-width:768px){
-  .sidebar{position:fixed;top:50px;right:0;bottom:0;transform:translateX(100%);z-index:999}
-  .sidebar.open{transform:translateX(0)}
-  .sidebar-toggle{display:block}
-  .map-footer{right:0}
-}
+@media(max-width:768px){.sidebar{position:fixed;top:50px;right:0;bottom:0;transform:translateX(100%);z-index:999}.sidebar.open{transform:translateX(0)}.sidebar-toggle{display:block}.map-footer{right:0}}
 </style>
 </head>
 <body>
 <nav class="top-nav">
-  <div style="display:flex;align-items:center;gap:4px">
-    <a href="index.html" class="nav-home">&#x1f3e0;</a>
-    <span class="nav-title">The House of Niccol&#242;</span>
-  </div>
-  <div class="nav-links">
-    <a href="site.html" class="active">Map</a>
-    <a href="#">Timeline</a>
-    <a href="#">Ask Claude</a>
-  </div>
-</nav>
-
-<div class="app-container">
-  <div id="map"></div>
-  <div class="sidebar" id="sidebar">
-    <h2>The Eight Books</h2>
-    <div class="subtitle">Filter locations by novel</div>
-    <div id="filters"></div>
-  </div>
+<div style="display:flex;align-items:center;gap:4px">
+<a href="index.html" class="nav-home" title="Home">&#x1f3e0;</a>
+<span class="nav-title">The House of Niccol&#242;</span>
 </div>
-
-<button class="sidebar-toggle" id="sidebarToggle" onclick="document.getElementById('sidebar').classList.toggle('open')">&#x1f4da;</button>
-<div class="map-footer">A gift for Jan Fergus &middot; Built with love by Mike Wolf &amp; Claude</div>
-
+<div class="nav-links">
+<a href="site.html" class="active">Map</a>
+<a href="#">Timeline</a>
+<a href="#">Ask Claude</a>
+</div>
+</nav>
+<div class="app-container">
+<div id="map"></div>
+<div class="sidebar" id="sidebar">
+<h2>The Eight Books</h2>
+<div class="subtitle">Toggle locations &amp; animate journeys</div>
+<div id="filters"></div>
+<div class="section-label">Journeys</div>
+<div class="legend-note">Click <strong>Animate</strong> beside any book to watch Nicholas's journey unfold across the map. The route traces his path through each city in sequence.</div>
+</div>
+</div>
+<button class="sidebar-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">&#x1f4da;</button>
+<div class="map-footer">A gift for Jan Fergus on her 83rd birthday &middot; Built with love by Mike Wolf &amp; Claude</div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-const BOOKS = [
-  {id:1,title:"Niccol\u00f2 Rising",dates:"1460",color:"#8B2D3A"},
-  {id:2,title:"The Spring of the Ram",dates:"1461",color:"#C9A84C"},
-  {id:3,title:"Race of Scorpions",dates:"1462\u20131464",color:"#2D6B4A"},
-  {id:4,title:"Scales of Gold",dates:"1464\u20131468",color:"#B87333"},
-  {id:5,title:"The Unicorn Hunt",dates:"1468\u20131470",color:"#4A5899"},
-  {id:6,title:"To Lie with Lions",dates:"1471\u20131473",color:"#6B8E9B"},
-  {id:7,title:"Caprice and Rondo",dates:"1474\u20131476",color:"#7B4B94"},
-  {id:8,title:"Gemini",dates:"1477\u20131503",color:"#A0522D"}
+const BOOKS=[
+{id:1,title:"Niccol\u00f2 Rising",dates:"1460",color:"#8B2D3A"},
+{id:2,title:"The Spring of the Ram",dates:"1461",color:"#C9A84C"},
+{id:3,title:"Race of Scorpions",dates:"1462\u20131464",color:"#2D6B4A"},
+{id:4,title:"Scales of Gold",dates:"1464\u20131468",color:"#B87333"},
+{id:5,title:"The Unicorn Hunt",dates:"1468\u20131470",color:"#4A5899"},
+{id:6,title:"To Lie with Lions",dates:"1471\u20131473",color:"#6B8E9B"},
+{id:7,title:"Caprice and Rondo",dates:"1474\u20131476",color:"#7B4B94"},
+{id:8,title:"Gemini",dates:"1477\u20131503",color:"#A0522D"}
 ];
 
-const LOCATIONS = [
-  {name:"Bruges",lat:51.21,lng:3.22,books:[1,2,5,6,7,8],desc:"Heart of the Niccol\u00f2 series. Home of the Charetty dyeworks where young Claes begins his rise from apprentice to merchant prince."},
-  {name:"Louvain",lat:50.88,lng:4.70,books:[1],desc:"University city in Flanders. Site of early intrigues in Nicholas\u2019s story."},
-  {name:"Geneva",lat:46.20,lng:6.14,books:[1],desc:"Banking centre and key location in Nicholas\u2019s early commercial schemes."},
-  {name:"Milan",lat:45.46,lng:9.19,books:[1],desc:"Seat of the Sforza dukes. Nicholas navigates Italian power politics."},
-  {name:"Florence",lat:43.77,lng:11.25,books:[2],desc:"Base of the Medici banking empire. Nicholas secures backing from Cosimo de\u2019 Medici himself."},
-  {name:"Trebizond",lat:41.00,lng:39.72,books:[2],desc:"Last outpost of Byzantium on the Black Sea. Nicholas\u2019s first great and perilous trading expedition."},
-  {name:"Constantinople",lat:41.01,lng:28.98,books:[2],desc:"The Ottoman capital. Shadow of the Sultan falls across all of Nicholas\u2019s eastern ventures."},
-  {name:"Rhodes",lat:36.43,lng:28.22,books:[3],desc:"Fortress of the Knights of St John. A pivotal stopover on the Mediterranean routes."},
-  {name:"Nicosia",lat:35.17,lng:33.36,books:[3],desc:"Capital of Lusignan Cyprus, where rival kings clash and Nicholas plays both sides."},
-  {name:"Famagusta",lat:35.12,lng:33.94,books:[3],desc:"Fortified port city of Cyprus. Key to the island\u2019s sugar trade and military control."},
-  {name:"Cairo",lat:30.04,lng:31.24,books:[3,5],desc:"Mamluk Egypt\u2019s great city. Trading hub, political powder keg, and crossroads of civilisations."},
-  {name:"Alexandria",lat:31.20,lng:29.92,books:[3],desc:"Egypt\u2019s Mediterranean gateway. Where East meets West in commerce and conflict."},
-  {name:"Venice",lat:45.44,lng:12.34,books:[4,7],desc:"Queen of the Adriatic. Banking, intrigue, and the nerve centre of Mediterranean trade."},
-  {name:"Sanl\u00facar de Barrameda",lat:36.77,lng:-6.35,books:[4],desc:"Spanish port at the mouth of the Guadalquivir. Departure point for Nicholas\u2019s African venture."},
-  {name:"Madeira",lat:32.65,lng:-16.91,books:[4],desc:"Atlantic island. Sugar plantations and a waypoint on the route to Africa."},
-  {name:"Timbuktu",lat:16.77,lng:-3.01,books:[4],desc:"The farthest reach of Nicholas\u2019s African expedition. Gold, salt, and the legendary Fountain of Youth."},
-  {name:"Edinburgh",lat:55.95,lng:-3.19,books:[5,6,8],desc:"Court of James III of Scotland. Nicholas entangles himself deeply in Scottish politics and succession."},
-  {name:"Sinai",lat:28.55,lng:33.97,books:[5],desc:"Desert peninsula. Ancient monasteries and dangerous crossings."},
-  {name:"Iceland",lat:64.15,lng:-21.94,books:[6],desc:"Frozen volcanic wastelands at the edge of the known world. Nicholas confronts merchant knights and polar bears."},
-  {name:"Nancy",lat:48.69,lng:6.18,books:[6],desc:"Capital of Burgundy. Site of Charles the Bold\u2019s fatal ambitions."},
-  {name:"Danzig",lat:54.35,lng:18.65,books:[7],desc:"Ice-bound Baltic port where the exiled Nicholas spends a pivotal winter."},
-  {name:"Caffa",lat:45.02,lng:35.38,books:[7],desc:"Genoese trading colony in the Crimea. Scented gardens and forbidden liaisons."},
-  {name:"Tabriz",lat:38.08,lng:46.29,books:[7],desc:"Court of the Persian prince Uzum Hasan. Silk Road diplomacy at its most dangerous."},
-  {name:"Moscow",lat:55.76,lng:37.62,books:[7],desc:"Court of Ivan III. Nicholas navigates the treacherous politics of rising Russia."}
+const LOCATIONS=[
+// Book 1 - Niccolo Rising
+{name:"Bruges",lat:51.21,lng:3.22,books:[1,2,5,6,7,8],desc:"Heart of the series. Home of the Charetty dyeworks where Claes begins his rise from dyer\u2019s apprentice to merchant prince."},
+{name:"Louvain",lat:50.88,lng:4.70,books:[1],desc:"University city. Young Claes causes havoc and catches the attention of powerful men."},
+{name:"Brussels",lat:50.85,lng:4.35,books:[1],desc:"Seat of Burgundian court politics. Nicholas navigates ducal intrigue."},
+{name:"Geneva",lat:46.20,lng:6.14,books:[1],desc:"Banking centre. Key to Nicholas\u2019s early commercial schemes and financial alliances."},
+{name:"Milan",lat:45.46,lng:9.19,books:[1],desc:"Seat of the Sforza dukes. Nicholas enters the world of Italian power politics."},
+{name:"Bologna",lat:44.49,lng:11.34,books:[1],desc:"University city and papal territory. Part of Nicholas\u2019s Italian journey."},
+{name:"Ghent",lat:51.05,lng:3.72,books:[1,8],desc:"Major Flemish city. Textile trade and Burgundian politics intertwine."},
+{name:"Sluys",lat:51.31,lng:3.39,books:[1],desc:"Port of Bruges. Gateway for the Charetty company\u2019s maritime trade."},
+// Book 2 - Spring of the Ram
+{name:"Florence",lat:43.77,lng:11.25,books:[2,5],desc:"Base of the Medici banking empire. Nicholas secures backing from Cosimo de\u2019 Medici."},
+{name:"Constantinople",lat:41.01,lng:28.98,books:[2],desc:"Ottoman capital since 1453. The Sultan\u2019s shadow falls across all eastern ventures."},
+{name:"Trebizond",lat:41.00,lng:39.72,books:[2],desc:"Last outpost of Byzantium on the Black Sea. Nicholas\u2019s first great trading expedition ends in the city\u2019s fall to Mehmed II."},
+{name:"Kerasous",lat:40.91,lng:38.39,books:[2],desc:"Black Sea port east of Trebizond. Coastal trading stop on the perilous eastern route."},
+{name:"Pera",lat:41.03,lng:28.97,books:[2],desc:"Genoese quarter across the Golden Horn. European merchants watch Ottoman power grow."},
+{name:"Modon",lat:36.82,lng:21.70,books:[2],desc:"Venetian fortress in the Peloponnese. Crucial waypoint on the sea route east."},
+// Book 3 - Race of Scorpions
+{name:"Rhodes",lat:36.43,lng:28.22,books:[3],desc:"Fortress of the Knights of St John. Pivotal stopover where allegiances are tested."},
+{name:"Nicosia",lat:35.17,lng:33.36,books:[3],desc:"Capital of Lusignan Cyprus. Rival kings Zacco and Carlotta clash for the throne."},
+{name:"Famagusta",lat:35.12,lng:33.94,books:[3],desc:"Fortified port city. Key to Cyprus\u2019s sugar trade and its military control."},
+{name:"Kolossi",lat:34.67,lng:32.93,books:[3],desc:"Castle and sugar refinery of the Knights. Nicholas learns the sweet economics of Cyprus."},
+{name:"Cairo",lat:30.04,lng:31.24,books:[3,5],desc:"Mamluk Egypt\u2019s great city. Trading hub, political powder keg, and crossroads of civilisations."},
+{name:"Alexandria",lat:31.20,lng:29.92,books:[3],desc:"Egypt\u2019s Mediterranean gateway. Where East meets West in commerce and espionage."},
+{name:"Kyrenia",lat:35.34,lng:33.32,books:[3],desc:"Northern Cyprus fortress. Carlotta\u2019s stronghold in the civil war."},
+{name:"Sigouri",lat:35.00,lng:33.42,books:[3],desc:"Mountain fortress in the Troodos. Dramatic siege in the Cypriot civil war."},
+{name:"Naples",lat:40.85,lng:14.27,books:[3],desc:"Angevin kingdom. Political entanglements connecting Cyprus to European dynastic struggles."},
+// Book 4 - Scales of Gold
+{name:"Venice",lat:45.44,lng:12.34,books:[4,5,7],desc:"Queen of the Adriatic. Banking, intrigue, and the nerve centre of Mediterranean trade."},
+{name:"Sanl\u00facar de Barrameda",lat:36.77,lng:-6.35,books:[4],desc:"Spanish port at the Guadalquivir\u2019s mouth. Departure point for Nicholas\u2019s African venture."},
+{name:"Lagos",lat:37.10,lng:-8.68,books:[4],desc:"Portuguese port in the Algarve. Staging ground for Atlantic and African exploration."},
+{name:"Madeira",lat:32.65,lng:-16.91,books:[4],desc:"Atlantic island. Sugar plantations and a waypoint on the route south to Africa."},
+{name:"Arguim",lat:20.58,lng:-16.52,books:[4],desc:"Island off the Saharan coast. Portuguese trading post for gold and slaves."},
+{name:"Gambia River",lat:13.45,lng:-16.58,books:[4],desc:"West African river. Nicholas penetrates deeper into the continent\u2019s interior."},
+{name:"Timbuktu",lat:16.77,lng:-3.01,books:[4],desc:"Fabled city of gold and learning. The farthest reach of Nicholas\u2019s African expedition."},
+{name:"Sahara Crossing",lat:22.00,lng:2.00,books:[4],desc:"The terrible desert crossing. Nicholas faces the ultimate test of survival."},
+// Book 5 - The Unicorn Hunt
+{name:"Edinburgh",lat:55.95,lng:-3.19,books:[5,6,8],desc:"Court of James III. Nicholas entangles himself in Scottish politics, music, and succession."},
+{name:"Stirling",lat:56.12,lng:-3.94,books:[5,8],desc:"Royal castle and birthplace of princes. Centre of Scottish court life."},
+{name:"Haddington",lat:55.96,lng:-2.78,books:[5],desc:"East Lothian town. Connected to the Beltrees estate and Nicholas\u2019s Scottish roots."},
+{name:"Tyrol / Innsbruck",lat:47.26,lng:11.39,books:[5],desc:"Alpine territory of Sigismond of Austria. Mining, music, and Hapsburg politics."},
+{name:"Sinai",lat:28.55,lng:33.97,books:[5],desc:"Desert peninsula. Nicholas journeys to the Monastery of St Catherine."},
+{name:"Cologne",lat:50.94,lng:6.96,books:[5],desc:"Rhineland trading city. Part of Nicholas\u2019s European network."},
+// Book 6 - To Lie with Lions
+{name:"Iceland / Westman Islands",lat:63.43,lng:-20.27,books:[6],desc:"Volcanic islands off Iceland\u2019s coast. Dramatic fishing expedition and confrontation."},
+{name:"Reykjavik area",lat:64.15,lng:-21.94,books:[6],desc:"Iceland\u2019s frozen interior. Nicholas confronts merchant knights and polar bears."},
+{name:"Nancy",lat:48.69,lng:6.18,books:[6],desc:"Capital of Lorraine. Site of Charles the Bold\u2019s final fatal battle in 1477."},
+{name:"Dijon",lat:47.32,lng:5.04,books:[6],desc:"Burgundian capital. Heart of the Valois duchy\u2019s power and culture."},
+{name:"Ham",lat:49.75,lng:3.07,books:[6],desc:"Picardy fortress. Scene of diplomatic and military manoeuvring."},
+{name:"London",lat:51.51,lng:-0.13,books:[6,8],desc:"English capital. Edward IV\u2019s court and Yorkist-Lancastrian politics touch Nicholas\u2019s world."},
+{name:"Leith",lat:55.98,lng:-3.17,books:[6,8],desc:"Port of Edinburgh. Scotland\u2019s gateway to maritime trade with Flanders and beyond."},
+// Book 7 - Caprice and Rondo
+{name:"Danzig",lat:54.35,lng:18.65,books:[7],desc:"Ice-bound Baltic port (modern Gda\u0144sk). The exiled Nicholas spends a dissolute winter."},
+{name:"Thorn",lat:53.01,lng:18.61,books:[7],desc:"Teutonic Order city on the Vistula. Polish-Prussian politics and Hanseatic trade."},
+{name:"Oliva",lat:54.41,lng:18.56,books:[7],desc:"Cistercian monastery near Danzig. Refuge and contemplation."},
+{name:"Caffa",lat:45.02,lng:35.38,books:[7],desc:"Genoese colony in the Crimea (modern Feodosia). Scented gardens and forbidden liaisons."},
+{name:"Tabriz",lat:38.08,lng:46.29,books:[7],desc:"Court of Uzum Hasan, prince of the White Sheep Turkmen. Silk Road diplomacy at its most dangerous."},
+{name:"Moscow",lat:55.76,lng:37.62,books:[7],desc:"Court of Ivan III. Nicholas navigates the treacherous politics of rising Muscovy."},
+{name:"Novgorod",lat:58.52,lng:31.28,books:[7],desc:"Ancient trading republic. The Hanseatic Kontor and Russian merchant culture."},
+{name:"Fasso / Soldaia",lat:44.84,lng:33.99,books:[7],desc:"Crimean coastal fortress. Genoese outpost overlooking the Black Sea."},
+{name:"Cracow",lat:50.06,lng:19.94,books:[7],desc:"Polish royal capital. Jagiellonian court and Central European politics."},
+// Book 8 - Gemini
+{name:"Berwick",lat:55.77,lng:-2.01,books:[8],desc:"Border fortress. Scottish-English tensions play out at this contested crossing."},
+{name:"Roslin",lat:55.86,lng:-3.16,books:[8],desc:"Rosslyn Chapel and the Sinclair estate. Mystery and architecture intertwine."},
+{name:"Ayr / Turnberry",lat:55.46,lng:-4.63,books:[8],desc:"South-west Scotland. Connected to the Boyd family and political machinations."},
+{name:"Linlithgow",lat:55.98,lng:-3.60,books:[8],desc:"Royal palace between Edinburgh and Stirling. Birthplace of future kings."},
+{name:"Antwerp",lat:51.22,lng:4.40,books:[8],desc:"Rising commercial centre. Gradually eclipsing Bruges as Flanders\u2019 trading capital."}
 ];
+
+// Journey routes - ordered sequence of locations Nicholas visits in each book
+const JOURNEYS={
+1:[[51.21,3.22],[50.88,4.70],[50.85,4.35],[51.31,3.39],[46.20,6.14],[45.46,9.19],[44.49,11.34],[45.46,9.19],[46.20,6.14],[51.21,3.22]],
+2:[[51.21,3.22],[43.77,11.25],[36.82,21.70],[41.03,28.97],[41.01,28.98],[40.91,38.39],[41.00,39.72],[41.01,28.98],[43.77,11.25],[51.21,3.22]],
+3:[[51.21,3.22],[40.85,14.27],[36.43,28.22],[35.17,33.36],[35.12,33.94],[34.67,32.93],[35.34,33.32],[35.00,33.42],[30.04,31.24],[31.20,29.92],[35.17,33.36]],
+4:[[45.44,12.34],[43.77,11.25],[36.77,-6.35],[37.10,-8.68],[32.65,-16.91],[20.58,-16.52],[13.45,-16.58],[16.77,-3.01],[22.00,2.00],[30.04,31.24],[45.44,12.34]],
+5:[[45.44,12.34],[43.77,11.25],[51.21,3.22],[50.94,6.96],[47.26,11.39],[55.95,-3.19],[55.96,-2.78],[30.04,31.24],[28.55,33.97],[45.44,12.34],[55.95,-3.19]],
+6:[[55.95,-3.19],[55.98,-3.17],[64.15,-21.94],[63.43,-20.27],[55.98,-3.17],[55.95,-3.19],[51.21,3.22],[49.75,3.07],[47.32,5.04],[48.69,6.18],[51.21,3.22],[51.51,-0.13],[55.95,-3.19]],
+7:[[54.35,18.65],[53.01,18.61],[54.41,18.56],[50.06,19.94],[45.02,35.38],[44.84,33.99],[38.08,46.29],[55.76,37.62],[58.52,31.28],[55.76,37.62],[45.44,12.34],[51.21,3.22]],
+8:[[51.21,3.22],[51.22,4.40],[51.51,-0.13],[55.95,-3.19],[56.12,-3.94],[55.98,-3.60],[55.86,-3.16],[55.77,-2.01],[55.46,-4.63],[55.95,-3.19]]
+};
 
 // Init map
-const map = L.map('map',{zoomControl:true}).setView([42,15],4);
-
-// Watercolor tiles
+const map=L.map('map',{zoomControl:true,scrollWheelZoom:true}).setView([42,12],4);
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
-  maxZoom:16,
-  attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+maxZoom:18,
+attribution:'\u00a9 <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors \u00a9 <a href="https://carto.com/attributions">CARTO</a>'
 }).addTo(map);
 
-// Text labels overlay
+const markerGroups={};
+const journeyLines={};
+const animatingJourneys={};
 
-// Create markers
-const markerGroups = {};
-BOOKS.forEach(b => { markerGroups[b.id] = L.layerGroup().addTo(map); });
+BOOKS.forEach(b=>{markerGroups[b.id]=L.layerGroup().addTo(map)});
 
 function createIcon(color){
-  return L.divIcon({
-    className:'custom-marker',
-    html:'<div style="width:14px;height:14px;background:'+color+';border:2px solid white;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,0.35)"></div>',
-    iconSize:[14,14],iconAnchor:[7,7],popupAnchor:[0,-10]
-  });
+return L.divIcon({
+className:'x',
+html:'<div style="width:12px;height:12px;background:'+color+';border:2px solid white;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,0.4);transition:transform 0.2s"></div>',
+iconSize:[12,12],iconAnchor:[6,6],popupAnchor:[0,-8]
+});
 }
 
-LOCATIONS.forEach(loc => {
-  const bookNames = loc.books.map(bid => BOOKS.find(b=>b.id===bid)).filter(Boolean);
-  const primaryBook = bookNames[0];
-  const popupHtml = '<div class="popup-title">'+loc.name+'</div>'+
-    '<div class="popup-books">'+bookNames.map(b=>'Book '+b.id+': '+b.title).join(' &middot; ')+'</div>'+
-    '<div class="popup-desc">'+loc.desc+'</div>';
-
-  loc.books.forEach(bid => {
-    const book = BOOKS.find(b=>b.id===bid);
-    const marker = L.marker([loc.lat,loc.lng],{icon:createIcon(book.color)}).bindPopup(popupHtml,{maxWidth:280});
-    markerGroups[bid].addLayer(marker);
-  });
+// Deduplicate: only place one marker per location, colored by first book
+const placed={};
+LOCATIONS.forEach(loc=>{
+const bookNames=loc.books.map(bid=>BOOKS.find(b=>b.id===bid)).filter(Boolean);
+const tags=bookNames.map(b=>'<span class="popup-book-tag" style="background:'+b.color+'">'+b.id+'. '+b.title+'</span>').join('');
+const popupHtml='<div class="popup-title">'+loc.name+'</div><div class="popup-books">'+tags+'</div><div class="popup-desc">'+loc.desc+'</div>';
+const key=loc.lat+','+loc.lng;
+if(!placed[key]){
+placed[key]=true;
+loc.books.forEach(bid=>{
+const book=BOOKS.find(b=>b.id===bid);
+const m=L.marker([loc.lat,loc.lng],{icon:createIcon(book.color)}).bindPopup(popupHtml,{maxWidth:300});
+markerGroups[bid].addLayer(m);
+});
+} else {
+loc.books.forEach(bid=>{
+const book=BOOKS.find(b=>b.id===bid);
+const m=L.marker([loc.lat,loc.lng],{icon:createIcon(book.color)}).bindPopup(popupHtml,{maxWidth:300});
+markerGroups[bid].addLayer(m);
+});
+}
 });
 
-// Build filter sidebar
-const filtersEl = document.getElementById('filters');
-BOOKS.forEach(b => {
-  const div = document.createElement('div');
-  div.className = 'book-filter';
-  div.innerHTML = '<input type="checkbox" checked id="book'+b.id+'" onchange="toggleBook('+b.id+',this.checked)">'+
-    '<div class="book-color" style="background:'+b.color+'"></div>'+
-    '<label class="book-info" for="book'+b.id+'">'+
-    '<div class="book-title">'+b.id+'. '+b.title+'</div>'+
-    '<div class="book-dates">'+b.dates+'</div></label>';
-  filtersEl.appendChild(div);
+// Build sidebar
+const filtersEl=document.getElementById('filters');
+BOOKS.forEach(b=>{
+const div=document.createElement('div');
+div.className='book-filter';
+div.innerHTML='<input type="checkbox" checked id="book'+b.id+'" onchange="toggleBook('+b.id+',this.checked)">'+
+'<div class="book-color" style="background:'+b.color+'"></div>'+
+'<label class="book-info" for="book'+b.id+'">'+
+'<div class="book-title">'+b.id+'. '+b.title+'</div>'+
+'<div class="book-dates">'+b.dates+'</div>'+
+'</label>'+
+'<button class="journey-btn" id="jbtn'+b.id+'" onclick="event.stopPropagation();animateJourney('+b.id+')">Animate</button>';
+filtersEl.appendChild(div);
 });
 
 function toggleBook(id,show){
-  if(show) map.addLayer(markerGroups[id]);
-  else map.removeLayer(markerGroups[id]);
+if(show)map.addLayer(markerGroups[id]);
+else map.removeLayer(markerGroups[id]);
+}
+
+// Journey animation
+function animateJourney(bookId){
+const btn=document.getElementById('jbtn'+bookId);
+// If already showing, remove
+if(journeyLines[bookId]){
+map.removeLayer(journeyLines[bookId]);
+delete journeyLines[bookId];
+if(animatingJourneys[bookId]){clearInterval(animatingJourneys[bookId]);delete animatingJourneys[bookId]}
+btn.classList.remove('active');
+btn.textContent='Animate';
+return;
+}
+const book=BOOKS.find(b=>b.id===bookId);
+const coords=JOURNEYS[bookId];
+if(!coords)return;
+btn.classList.add('active');
+btn.textContent='Clear';
+// Fit bounds
+const bounds=L.latLngBounds(coords.map(c=>L.latLng(c[0],c[1])));
+map.fitBounds(bounds,{padding:[60,60],maxZoom:6});
+// Animate polyline drawing
+const line=L.polyline([],{color:book.color,weight:3,opacity:0.8,dashArray:'8 4'}).addTo(map);
+journeyLines[bookId]=line;
+let step=0;
+const totalSteps=coords.length;
+const segSteps=30; // frames per segment
+let segIdx=0;
+let frame=0;
+function tick(){
+if(segIdx>=totalSteps-1){clearInterval(animatingJourneys[bookId]);delete animatingJourneys[bookId];return}
+const from=coords[segIdx];
+const to=coords[segIdx+1];
+const t=frame/segSteps;
+const lat=from[0]+(to[0]-from[0])*t;
+const lng=from[1]+(to[1]-from[1])*t;
+line.addLatLng([lat,lng]);
+frame++;
+if(frame>segSteps){segIdx++;frame=0}
+}
+animatingJourneys[bookId]=setInterval(tick,40);
 }
 </script>
 </body>
