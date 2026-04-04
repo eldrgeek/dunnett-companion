@@ -137,7 +137,7 @@ createParticles();
 function openGift(){const g=document.getElementById('gift');if(g.classList.contains('opening'))return;g.classList.add('opening');setTimeout(()=>{document.getElementById('gift-scene').classList.add('opened');setTimeout(()=>{document.getElementById('song-scene').classList.add('active')},600)},1500)}
 function showReveal(){document.getElementById('song-scene').classList.remove('active');setTimeout(()=>{document.getElementById('reveal-scene').classList.add('active');setTimeout(animateCards,300)},500)}
 function animateCards(){const c=document.querySelectorAll('.feature-card');c.forEach((card,i)=>{setTimeout(()=>{card.classList.add('visible')},i*150)})}
-function enterSite(){alert('The full House of Niccolò companion site is coming!\n\nMike and Claude are building it today.')}
+function enterSite(){window.location.href='site.html'}
 </script>
 </body>
 </html>
