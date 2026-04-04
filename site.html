@@ -229,43 +229,80 @@ else map.removeLayer(markerGroups[id]);
 // Journey animation
 function animateJourney(bookId){
 const btn=document.getElementById('jbtn'+bookId);
-// If already showing, remove
 if(journeyLines[bookId]){
 map.removeLayer(journeyLines[bookId]);
 delete journeyLines[bookId];
-if(animatingJourneys[bookId]){clearInterval(animatingJourneys[bookId]);delete animatingJourneys[bookId]}
+if(animatingJourneys[bookId]){cancelAnimationFrame(animatingJourneys[bookId]);delete animatingJourneys[bookId]}
 btn.classList.remove('active');
 btn.textContent='Animate';
+// Reset view
+map.setView([42,12],4,{animate:true,duration:1});
 return;
 }
 const book=BOOKS.find(b=>b.id===bookId);
 const coords=JOURNEYS[bookId];
-if(!coords)return;
+if(!coords||coords.length<2)return;
 btn.classList.add('active');
-btn.textContent='Clear';
-// Fit bounds
-const bounds=L.latLngBounds(coords.map(c=>L.latLng(c[0],c[1])));
-map.fitBounds(bounds,{padding:[60,60],maxZoom:6});
-// Animate polyline drawing
-const line=L.polyline([],{color:book.color,weight:3,opacity:0.8,dashArray:'8 4'}).addTo(map);
+btn.textContent='Stop';
+const line=L.polyline([],{color:book.color,weight:3.5,opacity:0.85,dashArray:'8 4',lineCap:'round'}).addTo(map);
 journeyLines[bookId]=line;
-let step=0;
-const totalSteps=coords.length;
-const segSteps=30; // frames per segment
+// Build city name lookup
+const cityAt={};
+LOCATIONS.forEach(loc=>{cityAt[loc.lat+','+loc.lng]=loc.name});
+// Segment-based animation with zoom
 let segIdx=0;
+const segFrames=40;
 let frame=0;
+let paused=false;
+function zoomToSegment(si){
+const from=coords[si],to=coords[si+1];
+const bounds=L.latLngBounds([L.latLng(from[0],from[1]),L.latLng(to[0],to[1])]);
+const dist=map.distance(L.latLng(from[0],from[1]),L.latLng(to[0],to[1]));
+const padPx=Math.max(80,Math.min(160,dist/5000));
+map.flyToBounds(bounds,{padding:[padPx,padPx],maxZoom:dist<50000?10:dist<200000?8:dist<800000?6:5,duration:0.8});
+}
+// Start first segment zoom
+zoomToSegment(0);
+// Wait for flyTo before drawing
+let started=false;
+function startDrawing(){
+if(started)return;
+started=true;
 function tick(){
-if(segIdx>=totalSteps-1){clearInterval(animatingJourneys[bookId]);delete animatingJourneys[bookId];return}
+if(!journeyLines[bookId])return;
+if(segIdx>=coords.length-1){
+// Journey complete - zoom out to show full route
+const allBounds=L.latLngBounds(coords.map(c=>L.latLng(c[0],c[1])));
+map.flyToBounds(allBounds,{padding:[60,60],maxZoom:6,duration:1.2});
+btn.textContent='Clear';
+delete animatingJourneys[bookId];
+return;
+}
 const from=coords[segIdx];
 const to=coords[segIdx+1];
-const t=frame/segSteps;
+const t=frame/segFrames;
 const lat=from[0]+(to[0]-from[0])*t;
 const lng=from[1]+(to[1]-from[1])*t;
 line.addLatLng([lat,lng]);
 frame++;
-if(frame>segSteps){segIdx++;frame=0}
+if(frame>segFrames){
+segIdx++;
+frame=0;
+if(segIdx<coords.length-1){
+// Pause briefly, then zoom to next segment
+paused=true;
+setTimeout(()=>{
+zoomToSegment(segIdx);
+setTimeout(()=>{paused=false;animatingJourneys[bookId]=requestAnimationFrame(tick)},900);
+},200);
+return;
 }
-animatingJourneys[bookId]=setInterval(tick,40);
+}
+if(!paused){animatingJourneys[bookId]=requestAnimationFrame(tick)}
+}
+animatingJourneys[bookId]=requestAnimationFrame(tick);
+}
+setTimeout(startDrawing,1000);
 }
 </script>
 </body>
