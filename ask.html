@@ -47,7 +47,7 @@ html,body{min-height:100%;font-family:'EB Garamond',serif;background:var(--cream
 </div>
 <div class="map-footer">A gift for Jan Fergus on her 83rd birthday &middot; Built with love by Mike Wolf &amp; Claude</div>
 <script>
-const API_KEY=localStorage.getItem("dunnett_api_key")||prompt("Enter your Claude API key to use Ask Claude:");if(API_KEY)localStorage.setItem("dunnett_api_key",API_KEY);
+
 const SYSTEM=`You are a knowledgeable companion for readers of Dorothy Dunnett's House of Niccolo series (8 books). You help readers understand characters, plot, historical context, themes, and locations. You are warm, literate, and insightful - like a well-read friend in a book group.
 
 The 8 books are: 1. Niccolo Rising (1460), 2. The Spring of the Ram (1461), 3. Race of Scorpions (1462-64), 4. Scales of Gold (1464-68), 5. The Unicorn Hunt (1468-70), 6. To Lie with Lions (1471-73), 7. Caprice and Rondo (1474-76), 8. Gemini (1477-1503).
@@ -74,10 +74,10 @@ async function send(){
   msgEl.appendChild(typing);
   msgEl.scrollTop=msgEl.scrollHeight;
   try{
-    const r=await fetch("https://api.anthropic.com/v1/messages",{
+    const r=await fetch("/api/ask",{
       method:"POST",
-      headers:{"Content-Type":"application/json","x-api-key":API_KEY,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},
-      body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1024,system:SYSTEM,messages:messages})
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({system:SYSTEM,messages:messages})
     });
     const d=await r.json();
     typing.remove();
