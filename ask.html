@@ -12,20 +12,24 @@ html,body{min-height:100%;font-family:'EB Garamond',serif;background:var(--cream
 .page-header p{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold-light);font-style:italic;margin-top:8px;opacity:0.85}
 .map-footer{text-align:center;padding:16px;font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--ink-light);font-style:italic;border-top:1px solid var(--cream-dark)}
 .chat-container{max-width:700px;margin:0 auto;padding:20px 24px 100px;display:flex;flex-direction:column;gap:12px}
-.system-note{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--ink-light);text-align:center;font-style:italic;padding:16px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.15);border-radius:6px;line-height:1.5}
+.system-note{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--ink-light);text-align:center;font-style:italic;padding:16px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.15);border-radius:6px;line-height:1.5}
 .messages{display:flex;flex-direction:column;gap:12px;min-height:200px}
-.msg{padding:14px 18px;border-radius:8px;max-width:85%;line-height:1.6;font-size:15px}
+.msg{padding:14px 18px;border-radius:8px;max-width:85%;line-height:1.6;font-size:20px}
 .msg.user{background:var(--burgundy);color:var(--cream);align-self:flex-end;border-bottom-right-radius:2px}
 .msg.assistant{background:white;color:var(--ink);align-self:flex-start;border:1px solid var(--cream-dark);border-bottom-left-radius:2px}
 .msg.assistant p{margin-bottom:8px}
 .msg.assistant p:last-child{margin-bottom:0}
 .input-bar{position:fixed;bottom:0;left:0;right:0;background:var(--cream);border-top:1px solid var(--cream-dark);padding:12px 24px;display:flex;gap:10px;justify-content:center;z-index:100}
-.input-bar input{flex:1;max-width:600px;font-family:'EB Garamond',serif;font-size:16px;padding:10px 16px;border:1px solid var(--cream-dark);border-radius:6px;outline:none;background:white;color:var(--ink)}
-.input-bar input:focus{border-color:var(--gold)}
+.input-bar textarea{flex:1;max-width:600px;font-family:'EB Garamond',serif;font-size:20px;padding:10px 16px;border:1px solid var(--cream-dark);border-radius:6px;outline:none;background:white;color:var(--ink);resize:none;overflow:hidden;min-height:44px;max-height:150px;line-height:1.4}
+.input-bar textarea:focus{border-color:var(--gold)}
 .input-bar button{font-family:'Cormorant Garamond',serif;font-size:15px;padding:10px 24px;background:var(--burgundy);color:var(--cream);border:none;border-radius:6px;cursor:pointer;letter-spacing:1px;transition:background 0.2s}
 .input-bar button:hover{background:var(--burgundy-deep)}
 .input-bar button:disabled{opacity:0.5;cursor:not-allowed}
-.typing{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--gold);font-style:italic;padding:8px 18px}</style></head><body><nav class="top-nav">
+.typing{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--gold);font-style:italic;padding:8px 18px}
+.font-controls{position:fixed;top:56px;right:16px;z-index:1001;display:flex;gap:4px}
+.font-btn{font-family:'Cormorant Garamond',serif;font-size:14px;width:32px;height:32px;border:1px solid var(--cream-dark);background:white;color:var(--ink);border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s}
+.font-btn:hover{background:var(--cream-dark)}
+</style></head><body><nav class="top-nav">
 <div style="display:flex;align-items:center;gap:4px">
 <a href="index.html" class="nav-home">&#x1f3e0;</a>
 <span class="nav-title">The House of Niccol&#242;</span>
@@ -36,7 +40,8 @@ html,body{min-height:100%;font-family:'EB Garamond',serif;background:var(--cream
 <a href="characters.html">Characters</a>
 <a href="ask.html" class="active">Ask Elspeth</a>
 </div>
-</nav><div class="page-header"><h1>Ask Elspeth</h1><p>Named for Elspeth Morrison, who wrote the Dunnett Companions</p></div>
+</nav>
+<div class="font-controls"><button class="font-btn" onclick="changeFontSize(-2)" title="Smaller text">A-</button><button class="font-btn" onclick="changeFontSize(2)" title="Larger text">A+</button></div><div class="page-header"><h1>Ask Elspeth</h1><p>Named for Elspeth Morrison, who wrote the Dunnett Companions</p></div>
 <div class="chat-container">
 <div class="system-note" id="welcomeNote">
 <p style="margin-bottom:12px;font-size:18px">I’m <strong>Elspeth</strong> — your reading companion for the House of Niccolò. I’ve read these books nine times and I’m still finding new things.</p>
@@ -51,7 +56,7 @@ html,body{min-height:100%;font-family:'EB Garamond',serif;background:var(--cream
 </div>
 <div class="messages" id="messages"></div>
 </div>
-<div class="input-bar" id="inputBar">
+<div class="input-bar" id="inputBar" style="display:none">
 <input type="text" id="input" placeholder="Ask Elspeth about Nicholas, Bruges, the Charetty company...ò, Bruges, the Charetty company..." autocomplete="off">
 <button id="sendbtn" onclick="send()">Ask</button>
 </div>
@@ -163,11 +168,10 @@ Happy birthday, Jan.`;
 
 const messages=[];
 const msgEl=document.getElementById("messages");
-const inp=document.getElementById("input");
 const btn=document.getElementById("sendbtn");
 
 async function send(){
-  const text=inp.value.trim();
+  const text=inp.value.trim();inp.style.height='auto';inp.style.height='44px';
   if(!text)return;
   inp.value="";btn.disabled=true;
   messages.push({role:"user",content:text});
@@ -206,5 +210,18 @@ function addMsg(role,text){
   msgEl.appendChild(div);
   window.scrollTo(0,document.body.scrollHeight);
 }
-inp.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send()}});
+if(inp){inp.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send()}});}
+
+// Auto-resize textarea
+const inp=document.getElementById("input");
+if(inp){inp.addEventListener("input",function(){this.style.height="auto";this.style.height=Math.min(this.scrollHeight,150)+"px"});}
+// Font size controls
+let baseFontSize=20;
+function changeFontSize(delta){
+  baseFontSize=Math.max(14,Math.min(32,baseFontSize+delta));
+  document.querySelectorAll(".msg").forEach(m=>m.style.fontSize=baseFontSize+"px");
+  document.querySelectorAll(".system-note").forEach(m=>m.style.fontSize=baseFontSize+"px");
+  if(inp)inp.style.fontSize=baseFontSize+"px";
+}
+
 </script></body></html>
