@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The House of Niccolò — Timeline</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--burgundy:#6B1D2A;--burgundy-deep:#4A0E1C;--gold:#C9A84C;--gold-light:#E8D48B;--cream:#FDF8F0;--cream-dark:#F0E6D3;--ink:#2A1A1A;--ink-light:#5A3A3A}
+html,body{min-height:100%;font-family:'EB Garamond',serif;background:var(--cream)}
+.top-nav{background:var(--burgundy-deep);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:0;right:0;z-index:1000;box-shadow:0 2px 12px rgba(0,0,0,0.3)}
+.nav-title{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);letter-spacing:1px;font-weight:700}
+.nav-links{display:flex;gap:24px}
+.nav-links a{font-family:'Cormorant Garamond',serif;color:var(--gold-light);text-decoration:none;font-size:15px;letter-spacing:1px;text-transform:uppercase;opacity:0.8;transition:opacity 0.2s}
+.nav-links a:hover,.nav-links a.active{opacity:1;border-bottom:1px solid var(--gold)}
+.nav-home{font-size:18px;text-decoration:none;margin-right:8px}
+.page-header{text-align:center;padding:80px 24px 30px;background:linear-gradient(180deg,var(--burgundy-deep) 0%,var(--burgundy) 70%,transparent 100%)}
+.page-header h1{font-family:'Playfair Display',serif;font-size:42px;color:var(--gold);letter-spacing:2px}
+.page-header p{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold-light);font-style:italic;margin-top:8px;opacity:0.85}
+.filter-bar{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;padding:20px 24px;max-width:900px;margin:0 auto}
+.filter-pill{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:1px;padding:5px 14px;border-radius:20px;border:1px solid var(--cream-dark);background:white;cursor:pointer;transition:all 0.2s;color:var(--ink-light);display:flex;align-items:center;gap:6px}
+.filter-pill .dot{width:8px;height:8px;border-radius:50%}
+.filter-pill.active{border-color:var(--burgundy);color:var(--ink);font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,0.08)}
+.timeline{max-width:800px;margin:0 auto;padding:20px 24px 80px;position:relative}
+.timeline::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--gold) 0%,var(--burgundy) 50%,var(--gold) 100%);transform:translateX(-50%)}
+.year-marker{text-align:center;position:relative;z-index:2;margin:30px 0 10px}
+.year-marker span{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--burgundy);background:var(--cream);padding:4px 16px;border:2px solid var(--gold);border-radius:4px;display:inline-block}
+.event{position:relative;width:44%;padding:16px 20px;background:white;border:1px solid var(--cream-dark);border-radius:6px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,0.04);transition:opacity 0.3s,transform 0.3s}
+.event:hover{box-shadow:0 4px 16px rgba(107,29,42,0.1)}
+.event.left{margin-left:0;margin-right:auto}
+.event.right{margin-left:auto;margin-right:0}
+.event.filtered{opacity:0.06;transform:scale(0.97);pointer-events:none}
+.event .book-tag{font-family:'Cormorant Garamond',serif;font-size:10px;color:white;padding:2px 8px;border-radius:2px;text-transform:uppercase;letter-spacing:1px;display:inline-block;margin-bottom:6px}
+.event h3{font-family:'Playfair Display',serif;font-size:15px;color:var(--burgundy);margin-bottom:4px;font-weight:600;line-height:1.3}
+.event .location{font-family:'Cormorant Garamond',serif;font-size:12px;color:var(--gold);margin-bottom:6px;font-style:italic}
+.event p{font-size:14px;color:var(--ink-light);line-height:1.5}
+.event .hist{font-size:11px;color:#8A7030;margin-top:6px;font-style:italic;border-top:1px solid var(--cream-dark);padding-top:6px}
+.map-footer{text-align:center;padding:16px;font-family:'Cormorant Garamond',serif;font-size:12px;color:var(--ink-light);font-style:italic;border-top:1px solid var(--cream-dark)}
+@media(max-width:700px){.timeline::before{left:20px}.event{width:calc(100% - 50px)!important;margin-left:50px!important}.year-marker{text-align:left;padding-left:0}}
+</style>
+</head>
+<body>
+<nav class="top-nav">
+<div style="display:flex;align-items:center;gap:4px">
+<a href="index.html" class="nav-home">&#x1f3e0;</a>
+<span class="nav-title">The House of Niccol&#242;</span>
+</div>
+<div class="nav-links">
+<a href="site.html">Map</a>
+<a href="timeline.html" class="active">Timeline</a>
+<a href="#">Ask Claude</a>
+</div>
+</nav>
+<div class="page-header"><h1>Timeline</h1><p>Forty-three years in the life of Nicholas de Fleury, 1460&#8211;1503</p></div>
+<div class="filter-bar" id="filterBar"></div>
+<div class="timeline" id="timeline"></div>
+<div class="map-footer">A gift for Jan Fergus on her 83rd birthday &middot; Built with love by Mike Wolf &amp; Claude</div>
+<script>
+
+const BOOKS=[
+{id:1,title:"Niccol\u00f2 Rising",color:"#8B2D3A"},
+{id:2,title:"The Spring of the Ram",color:"#C9A84C"},
+{id:3,title:"Race of Scorpions",color:"#2D6B4A"},
+{id:4,title:"Scales of Gold",color:"#B87333"},
+{id:5,title:"The Unicorn Hunt",color:"#4A5899"},
+{id:6,title:"To Lie with Lions",color:"#6B8E9B"},
+{id:7,title:"Caprice and Rondo",color:"#7B4B94"},
+{id:8,title:"Gemini",color:"#A0522D"}
+];
+const EVENTS=[{"year": "1459", "book": 1, "title": "Claes rides into Bruges in an empty bathtub", "loc": "Bruges", "desc": "Eighteen-year-old dyer\u2019s apprentice Claes hitches a ride on a canal barge with Felix de Charetty and Julius."}, {"year": "1460", "book": 1, "title": "The Carnival riot", "loc": "Bruges", "desc": "A Shrove Tuesday carnival erupts in violence. Claes is beaten by Simon de St Pol, beginning a lifelong enmity."}, {"year": "1460", "book": 1, "title": "Claes enters the service of Marian de Charetty", "loc": "Bruges", "desc": "The widowed businesswoman recognises Claes\u2019s commercial genius."}, {"year": "1460", "book": 1, "title": "Journey to Geneva and Milan", "loc": "Geneva, Milan", "desc": "Nicholas travels south to establish banking connections.", "hist": "The Sforza dukes rule Milan; the great age of Italian merchant banking."}, {"year": "1460", "book": 1, "title": "The alum mine scheme", "loc": "Papal States", "desc": "Nicholas discovers alum deposits essential for dyeing \u2014 his first great commercial coup."}, {"year": "1460", "book": 1, "title": "Battle near Naples; death of Felix", "loc": "Naples", "desc": "Nicholas and Astorre\u2019s mercenaries fight in southern Italy. Felix de Charetty is killed."}, {"year": "1460", "book": 1, "title": "Marriage to Marian de Charetty", "loc": "Bruges", "desc": "Nicholas marries the older widow, scandalising Bruges. \u2018Claes\u2019 becomes \u2018Nicholas.\u2019"}, {"year": "1461", "book": 2, "title": "The Charetty expedition departs for the East", "loc": "Florence", "desc": "Nicholas secures Medici backing for a trading voyage to Trebizond.", "hist": "Cosimo de\u2019 Medici dominates Florentine politics and European banking."}, {"year": "1461", "book": 2, "title": "Pagano Doria marries Catherine de Charetty", "loc": "Florence", "desc": "Nicholas\u2019s stepdaughter married to the Genoese adventurer, threatening the company."}, {"year": "1461", "book": 2, "title": "Arrival at Trebizond", "loc": "Trebizond", "desc": "The trading party reaches the fabled Black Sea port as the city\u2019s doom approaches."}, {"year": "1461", "book": 2, "title": "The Fall of Trebizond", "loc": "Trebizond", "desc": "Mehmed II\u2019s forces take the city. Pagano Doria is killed.", "hist": "The fall ended the last successor state of the Roman Empire."}, {"year": "1461", "book": 2, "title": "Return to the West", "loc": "Constantinople, Florence", "desc": "Nicholas escapes with life and profits, returning via Constantinople."}, {"year": "1462", "book": 3, "title": "Nicholas is kidnapped to Rhodes", "loc": "Rhodes", "desc": "Both Queen Carlotta and King Zacco try to recruit Nicholas for their civil war."}, {"year": "1462", "book": 3, "title": "Nicholas chooses Zacco", "loc": "Cyprus", "desc": "Nicholas joins James (Zacco), establishing sugar production at Kolossi."}, {"year": "1463", "book": 3, "title": "The siege of Famagusta", "loc": "Famagusta", "desc": "Nicholas helps Zacco take the great fortified port."}, {"year": "1463", "book": 3, "title": "Death of Katelina van Borselen", "loc": "Cyprus", "desc": "Nicholas\u2019s former lover dies, leaving the infant Henry."}, {"year": "1464", "book": 3, "title": "Nicholas leaves Cyprus", "loc": "Cairo, Alexandria", "desc": "Sugar monopoly established. Nicholas departs via Mamluk Egypt."}, {"year": "1464", "book": 4, "title": "Departure for Africa", "loc": "Venice, Sanl\u00facar", "desc": "Nicholas sets sail for Africa, seeking gold and escape from Gelis\u2019s fury."}, {"year": "1465", "book": 4, "title": "Down the African coast", "loc": "Madeira, Arguim", "desc": "The expedition follows the Portuguese route south.", "hist": "Prince Henry the Navigator\u2019s legacy: Portuguese coastal exploration."}, {"year": "1465", "book": 4, "title": "The Gambia River", "loc": "Gambia, West Africa", "desc": "Nicholas penetrates the continent\u2019s interior with Father Godscalc."}, {"year": "1466", "book": 4, "title": "Timbuktu", "loc": "Timbuktu", "desc": "The fabled city of gold and Islamic learning.", "hist": "Centre of Songhai scholarship and trans-Saharan trade."}, {"year": "1467", "book": 4, "title": "The Sahara crossing; death of Godscalc", "loc": "Sahara", "desc": "The terrible desert crossing. Father Godscalc dies."}, {"year": "1468", "book": 4, "title": "Return to Venice; marriage to Gelis", "loc": "Venice", "desc": "Nicholas returns wealthy but changed. Marries Gelis \u2014 their war begins."}, {"year": "1468", "book": 5, "title": "Nicholas arrives in Scotland", "loc": "Edinburgh", "desc": "Enters the court of James III, seeking secrets of his birth.", "hist": "James III of Scotland: cultured but politically weak."}, {"year": "1468", "book": 5, "title": "Gelis\u2019s challenge", "loc": "Bruges, Edinburgh", "desc": "Gelis claims to carry Simon\u2019s child \u2014 or is it Nicholas\u2019s?"}, {"year": "1469", "book": 5, "title": "The Tyrol and Sigismond", "loc": "Innsbruck", "desc": "Mining interests and musical patronage at the Habsburg court.", "hist": "Sigismond of Tyrol, silver-rich duke and patron."}, {"year": "1469", "book": 5, "title": "Journey to Egypt and Sinai", "loc": "Cairo, Sinai", "desc": "Nicholas journeys to St Catherine\u2019s Monastery, using his divining gift."}, {"year": "1470", "book": 5, "title": "Birth of Jordan de Fleury", "loc": "Scotland", "desc": "Gelis gives birth to a son. His paternity remains her weapon."}, {"year": "1471", "book": 6, "title": "The Iceland expedition", "loc": "Iceland", "desc": "Fishing voyage: merchant knights, volcanic eruptions, polar bears.", "hist": "Icelandic cod trade contested by English and Hanseatic merchants."}, {"year": "1471", "book": 6, "title": "The Nativity Play in Edinburgh", "loc": "Edinburgh", "desc": "Nicholas stages an extraordinary theatrical spectacle for the court."}, {"year": "1472", "book": 6, "title": "Nicholas seizes Jordan from Gelis", "loc": "Scotland", "desc": "Custody of his son wrested, escalating the marital war."}, {"year": "1473", "book": 6, "title": "The fall of Burgundy begins", "loc": "Nancy, Bruges", "desc": "Charles the Bold\u2019s overreach leads toward catastrophe.", "hist": "Charles died at Nancy in 1477, ending independent Burgundy."}, {"year": "1473", "book": 6, "title": "Nicholas\u2019s schemes exposed", "loc": "Bruges", "desc": "The scale of his manipulations revealed. Exile follows."}, {"year": "1474", "book": 7, "title": "Exile in Danzig", "loc": "Danzig", "desc": "Dissolute winter in the frozen Baltic port.", "hist": "Danzig: major Hanseatic League city between Poland and Teutonic Knights."}, {"year": "1474", "book": 7, "title": "Journey to the Crimea", "loc": "Caffa", "desc": "Nicholas enters Black Sea trade and Crimean intrigue."}, {"year": "1475", "book": 7, "title": "At the court of Uzum Hasan", "loc": "Tabriz", "desc": "The Turkmen prince seeks Western allies against the Ottomans.", "hist": "Uzum Hasan: Venice\u2019s hoped-for Eastern ally against Mehmed II."}, {"year": "1476", "book": 7, "title": "Moscow and Ivan III", "loc": "Moscow", "desc": "Navigating Russian politics at a transformative moment.", "hist": "Ivan III consolidating Muscovite power, ending the Tatar yoke."}, {"year": "1476", "book": 7, "title": "Return west", "loc": "Novgorod, Venice, Bruges", "desc": "Through Novgorod\u2019s Hanseatic quarter, back to Bruges. Redemption begins."}, {"year": "1477", "book": 8, "title": "Return to Scotland", "loc": "Edinburgh", "desc": "Nicholas returns to make amends for the damage he caused."}, {"year": "1478", "book": 8, "title": "Reconciliation with Gelis", "loc": "Edinburgh", "desc": "The marital war ends. Hard-won, honest partnership at last."}, {"year": "1479", "book": 8, "title": "Nicholas investigates his birth", "loc": "Scotland, Bruges", "desc": "The central enigma of the series begins to resolve."}, {"year": "1482", "book": 8, "title": "The crisis of James III", "loc": "Edinburgh, Stirling", "desc": "Nicholas deeply involved in stabilising Scotland.", "hist": "James III faced repeated noble rebellions."}, {"year": "1488", "book": 8, "title": "Death of James III at Sauchieburn", "loc": "Stirling", "desc": "The king is killed after battle. James IV takes the throne."}, {"year": "1503", "book": 8, "title": "The end of the story", "loc": "Scotland", "desc": "Nicholas\u2019s full identity revealed. The stage is set for the Crawfords of Lymond, a hundred years hence."}];
+const activeBooks=new Set(BOOKS.map(b=>b.id));
+const filterBar=document.getElementById('filterBar');
+BOOKS.forEach(b=>{
+const pill=document.createElement('div');
+pill.className='filter-pill active';pill.id='pill'+b.id;
+pill.innerHTML='<div class="dot" style="background:'+b.color+'"></div>'+b.id+'. '+b.title;
+pill.onclick=()=>{
+if(activeBooks.has(b.id)){activeBooks.delete(b.id);pill.classList.remove('active')}
+else{activeBooks.add(b.id);pill.classList.add('active')}
+document.querySelectorAll('.event').forEach(el=>{
+const bid=parseInt(el.dataset.book);
+el.classList.toggle('filtered',!activeBooks.has(bid));
+});
+};
+filterBar.appendChild(pill);
+});
+const tlEl=document.getElementById('timeline');
+let lastYear='',side=0,childIdx=0;
+EVENTS.forEach(ev=>{
+if(ev.year!==lastYear){
+const ym=document.createElement('div');ym.className='year-marker';
+ym.innerHTML='<span>'+ev.year+'</span>';tlEl.appendChild(ym);
+lastYear=ev.year;side=0;childIdx++;
+}
+const book=BOOKS.find(b=>b.id===ev.book);
+const div=document.createElement('div');
+div.className='event '+(side%2===0?'left':'right');
+div.dataset.book=ev.book;childIdx++;
+let h='<span class="book-tag" style="background:'+book.color+'">Book '+book.id+'</span>';
+h+='<h3>'+ev.title+'</h3><div class="location">'+ev.loc+'</div><p>'+ev.desc+'</p>';
+if(ev.hist)h+='<div class="hist">\ud83c\udfdb\ufe0f '+ev.hist+'</div>';
+div.innerHTML=h;
+const s=document.createElement('style');
+s.textContent='.timeline > :nth-child('+childIdx+')::before{content:\'\';position:absolute;top:20px;width:10px;height:10px;border-radius:50%;z-index:3;background:'+book.color+'}'
++'.timeline > :nth-child('+childIdx+').left::before{right:-31px}'
++'.timeline > :nth-child('+childIdx+').right::before{left:-31px}';
+document.head.appendChild(s);
+tlEl.appendChild(div);side++;
+});
+</script></body></html>
