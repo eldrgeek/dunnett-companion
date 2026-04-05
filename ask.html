@@ -7,12 +7,12 @@ html,body{min-height:100%;font-family:'EB Garamond',serif;background:var(--cream
 .nav-links a{font-family:'Cormorant Garamond',serif;color:var(--gold-light);text-decoration:none;font-size:15px;letter-spacing:1px;text-transform:uppercase;opacity:0.8;transition:opacity 0.2s}
 .nav-links a:hover,.nav-links a.active{opacity:1;border-bottom:1px solid var(--gold)}
 .nav-home{font-size:18px;text-decoration:none;margin-right:8px}
-.page-header{text-align:center;padding:80px 24px 30px;background:linear-gradient(180deg,var(--burgundy-deep) 0%,var(--burgundy) 70%,transparent 100%)}
+.page-header{text-align:center;padding:80px 24px 30px;background:linear-gradient(180deg,var(--burgundy-deep) 0%,var(--burgundy) 80%,var(--cream) 100%)}
 .page-header h1{font-family:'Playfair Display',serif;font-size:42px;color:var(--gold);letter-spacing:2px}
-.page-header p{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold-light);font-style:italic;margin-top:8px;opacity:0.85}
-.map-footer{text-align:center;padding:16px;font-family:'Cormorant Garamond',serif;font-size:12px;color:var(--ink-light);font-style:italic;border-top:1px solid var(--cream-dark)}
+.page-header p{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold-light);font-style:italic;margin-top:8px;opacity:0.85}
+.map-footer{text-align:center;padding:16px;font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--ink-light);font-style:italic;border-top:1px solid var(--cream-dark)}
 .chat-container{max-width:700px;margin:0 auto;padding:20px 24px 100px;display:flex;flex-direction:column;gap:12px}
-.system-note{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--ink-light);text-align:center;font-style:italic;padding:16px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.15);border-radius:6px;line-height:1.5}
+.system-note{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--ink-light);text-align:center;font-style:italic;padding:16px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.15);border-radius:6px;line-height:1.5}
 .messages{display:flex;flex-direction:column;gap:12px;min-height:200px}
 .msg{padding:14px 18px;border-radius:8px;max-width:85%;line-height:1.6;font-size:15px}
 .msg.user{background:var(--burgundy);color:var(--cream);align-self:flex-end;border-bottom-right-radius:2px}
@@ -38,10 +38,20 @@ html,body{min-height:100%;font-family:'EB Garamond',serif;background:var(--cream
 </div>
 </nav><div class="page-header"><h1>Ask Elspeth</h1><p>Named for Elspeth Morrison, who wrote the Dunnett Companions</p></div>
 <div class="chat-container">
-<div class="system-note">I\u2019m Elspeth \u2014 your reading companion for the House of Niccolò — characters, plot, historical context, themes, or locations. Tell me which book you’re currently reading and I’ll avoid spoilers.</div>
+<div class="system-note" id="welcomeNote">
+<p style="margin-bottom:12px;font-size:18px">I’m <strong>Elspeth</strong> — your reading companion for the House of Niccolò. I’ve read these books nine times and I’m still finding new things.</p>
+<p style="margin-bottom:14px">Before we begin, tell me who you are so I can greet you properly:</p>
+<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap">
+<input type="text" id="nameInput" placeholder="Your first name" style="font-family:EB Garamond,serif;font-size:16px;padding:8px 14px;border:1px solid #E8D48B;border-radius:4px;outline:none;width:180px;text-align:center;background:white;color:#2A1A1A" onkeydown="if(event.key==='Enter')setUserName()">
+<button onclick="setUserName()" style="font-family:Cormorant Garamond,serif;font-size:14px;padding:8px 18px;background:#6B1D2A;color:#FDF8F0;border:none;border-radius:4px;cursor:pointer;letter-spacing:1px">Enter the House of Niccolò</button>
+</div>
+</div>
+<div class="system-note" id="activeNote" style="display:none">
+<span id="greetText"></span> Tell me which book you’re on and I’ll be careful with spoilers.
+</div>
 <div class="messages" id="messages"></div>
 </div>
-<div class="input-bar" id="inputBar" style="display:none">
+<div class="input-bar" id="inputBar">
 <input type="text" id="input" placeholder="Ask Elspeth about Nicholas, Bruges, the Charetty company...ò, Bruges, the Charetty company..." autocomplete="off">
 <button id="sendbtn" onclick="send()">Ask</button>
 </div>
