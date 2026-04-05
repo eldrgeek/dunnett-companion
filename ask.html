@@ -1,0 +1,107 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>The House of Niccolò — Ask Claude</title><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box}
+:root{--burgundy:#6B1D2A;--burgundy-deep:#4A0E1C;--gold:#C9A84C;--gold-light:#E8D48B;--cream:#FDF8F0;--cream-dark:#F0E6D3;--ink:#2A1A1A;--ink-light:#5A3A3A}
+html,body{min-height:100%;font-family:'EB Garamond',serif;background:var(--cream)}
+.top-nav{background:var(--burgundy-deep);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:0;right:0;z-index:1000;box-shadow:0 2px 12px rgba(0,0,0,0.3)}
+.nav-title{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);letter-spacing:1px;font-weight:700}
+.nav-links{display:flex;gap:24px}
+.nav-links a{font-family:'Cormorant Garamond',serif;color:var(--gold-light);text-decoration:none;font-size:15px;letter-spacing:1px;text-transform:uppercase;opacity:0.8;transition:opacity 0.2s}
+.nav-links a:hover,.nav-links a.active{opacity:1;border-bottom:1px solid var(--gold)}
+.nav-home{font-size:18px;text-decoration:none;margin-right:8px}
+.page-header{text-align:center;padding:80px 24px 30px;background:linear-gradient(180deg,var(--burgundy-deep) 0%,var(--burgundy) 70%,transparent 100%)}
+.page-header h1{font-family:'Playfair Display',serif;font-size:42px;color:var(--gold);letter-spacing:2px}
+.page-header p{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold-light);font-style:italic;margin-top:8px;opacity:0.85}
+.map-footer{text-align:center;padding:16px;font-family:'Cormorant Garamond',serif;font-size:12px;color:var(--ink-light);font-style:italic;border-top:1px solid var(--cream-dark)}
+.chat-container{max-width:700px;margin:0 auto;padding:20px 24px 100px;display:flex;flex-direction:column;gap:12px}
+.system-note{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--ink-light);text-align:center;font-style:italic;padding:16px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.15);border-radius:6px;line-height:1.5}
+.messages{display:flex;flex-direction:column;gap:12px;min-height:200px}
+.msg{padding:14px 18px;border-radius:8px;max-width:85%;line-height:1.6;font-size:15px}
+.msg.user{background:var(--burgundy);color:var(--cream);align-self:flex-end;border-bottom-right-radius:2px}
+.msg.assistant{background:white;color:var(--ink);align-self:flex-start;border:1px solid var(--cream-dark);border-bottom-left-radius:2px}
+.msg.assistant p{margin-bottom:8px}
+.msg.assistant p:last-child{margin-bottom:0}
+.input-bar{position:fixed;bottom:0;left:0;right:0;background:var(--cream);border-top:1px solid var(--cream-dark);padding:12px 24px;display:flex;gap:10px;justify-content:center;z-index:100}
+.input-bar input{flex:1;max-width:600px;font-family:'EB Garamond',serif;font-size:16px;padding:10px 16px;border:1px solid var(--cream-dark);border-radius:6px;outline:none;background:white;color:var(--ink)}
+.input-bar input:focus{border-color:var(--gold)}
+.input-bar button{font-family:'Cormorant Garamond',serif;font-size:15px;padding:10px 24px;background:var(--burgundy);color:var(--cream);border:none;border-radius:6px;cursor:pointer;letter-spacing:1px;transition:background 0.2s}
+.input-bar button:hover{background:var(--burgundy-deep)}
+.input-bar button:disabled{opacity:0.5;cursor:not-allowed}
+.typing{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--gold);font-style:italic;padding:8px 18px}</style></head><body><nav class="top-nav">
+<div style="display:flex;align-items:center;gap:4px">
+<a href="index.html" class="nav-home">&#x1f3e0;</a>
+<span class="nav-title">The House of Niccol&#242;</span>
+</div>
+<div class="nav-links">
+<a href="site.html">Map</a>
+<a href="timeline.html">Timeline</a>
+<a href="characters.html">Characters</a>
+<a href="ask.html" class="active">Ask Claude</a>
+</div>
+</nav><div class="page-header"><h1>Ask Claude</h1><p>Your Dunnett-savvy reading companion</p></div>
+<div class="chat-container">
+<div class="system-note">Ask me anything about the House of Niccolò — characters, plot, historical context, themes, or locations. Tell me which book you’re currently reading and I’ll avoid spoilers.</div>
+<div class="messages" id="messages"></div>
+</div>
+<div class="input-bar">
+<input type="text" id="input" placeholder="Ask about Niccolò, Bruges, the Charetty company..." autocomplete="off">
+<button id="sendbtn" onclick="send()">Ask</button>
+</div>
+<div class="map-footer">A gift for Jan Fergus on her 83rd birthday &middot; Built with love by Mike Wolf &amp; Claude</div>
+<script>
+const API_KEY=localStorage.getItem("dunnett_api_key")||prompt("Enter your Claude API key to use Ask Claude:");if(API_KEY)localStorage.setItem("dunnett_api_key",API_KEY);
+const SYSTEM=`You are a knowledgeable companion for readers of Dorothy Dunnett's House of Niccolo series (8 books). You help readers understand characters, plot, historical context, themes, and locations. You are warm, literate, and insightful - like a well-read friend in a book group.
+
+The 8 books are: 1. Niccolo Rising (1460), 2. The Spring of the Ram (1461), 3. Race of Scorpions (1462-64), 4. Scales of Gold (1464-68), 5. The Unicorn Hunt (1468-70), 6. To Lie with Lions (1471-73), 7. Caprice and Rondo (1474-76), 8. Gemini (1477-1503).
+
+The protagonist is Nicholas de Fleury (also called Claes, Niccolo, Nicholas vander Poele), who rises from dyer's apprentice in Bruges to merchant prince. Key characters include Marian de Charetty (first wife), Gelis van Borselen (second wife and adversary), Tobie (physician), Julius (notary), Father Godscalc (chaplain), John le Grant (engineer), Captain Astorre (mercenary), Kathi Sersanders, Robin of Berecrofts, and enemies Simon and Jordan de St Pol.
+
+Be helpful but be careful about spoilers. If someone mentions which book they are currently reading, avoid revealing plot points from later books. You can discuss historical context freely since that is real history.
+
+Keep answers concise but substantive. Use the literary, warm tone appropriate for a Dunnett reader.`;
+
+const messages=[];
+const msgEl=document.getElementById("messages");
+const inp=document.getElementById("input");
+const btn=document.getElementById("sendbtn");
+
+async function send(){
+  const text=inp.value.trim();
+  if(!text)return;
+  inp.value="";btn.disabled=true;
+  messages.push({role:"user",content:text});
+  addMsg("user",text);
+  const typing=document.createElement("div");
+  typing.className="typing";typing.textContent="Claude is thinking...";
+  msgEl.appendChild(typing);
+  msgEl.scrollTop=msgEl.scrollHeight;
+  try{
+    const r=await fetch("https://api.anthropic.com/v1/messages",{
+      method:"POST",
+      headers:{"Content-Type":"application/json","x-api-key":API_KEY,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},
+      body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1024,system:SYSTEM,messages:messages})
+    });
+    const d=await r.json();
+    typing.remove();
+    if(d.content&&d.content[0]){
+      const reply=d.content[0].text;
+      messages.push({role:"assistant",content:reply});
+      addMsg("assistant",reply);
+    }else{
+      addMsg("assistant","I had trouble responding. Please try again.");
+    }
+  }catch(e){
+    typing.remove();
+    addMsg("assistant","Connection error: "+e.message);
+  }
+  btn.disabled=false;inp.focus();
+}
+function addMsg(role,text){
+  const div=document.createElement("div");
+  div.className="msg "+role;
+  if(role==="assistant"){
+    div.innerHTML=text.split("\n\n").map(p=>"<p>"+p.replace(/\n/g,"<br>")+"</p>").join("");
+  }else{div.textContent=text}
+  msgEl.appendChild(div);
+  window.scrollTo(0,document.body.scrollHeight);
+}
+inp.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send()}});
+</script></body></html>
