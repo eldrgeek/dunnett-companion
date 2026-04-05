@@ -41,12 +41,64 @@ html,body{min-height:100%;font-family:'EB Garamond',serif;background:var(--cream
 <div class="system-note">I\u2019m Elspeth \u2014 your reading companion for the House of Niccolò — characters, plot, historical context, themes, or locations. Tell me which book you’re currently reading and I’ll avoid spoilers.</div>
 <div class="messages" id="messages"></div>
 </div>
-<div class="input-bar">
+<div class="input-bar" id="inputBar" style="display:none">
 <input type="text" id="input" placeholder="Ask Elspeth about Nicholas, Bruges, the Charetty company...ò, Bruges, the Charetty company..." autocomplete="off">
 <button id="sendbtn" onclick="send()">Ask</button>
 </div>
 <div class="map-footer">A gift for Jan Fergus on her 83rd birthday &middot; Built with love by Mike Wolf &amp; Claude</div>
 <script>
+
+
+let userName = "";
+function setUserName(){
+  const n = document.getElementById("nameInput").value.trim();
+  if(!n) return;
+  userName = n;
+  localStorage.setItem("dunnett_user", n);
+  activateChat();
+}
+function activateChat(){
+  document.getElementById("welcomeNote").style.display="none";
+  document.getElementById("activeNote").style.display="block";
+  document.getElementById("inputBar").style.display="flex";
+  const isJan = userName.toLowerCase() === "jan";
+  if(isJan){
+    document.getElementById("greetText").textContent = "Happy birthday, Jan! I\u2019m Elspeth, and I\u2019ve been waiting to meet you.";
+  } else {
+    document.getElementById("greetText").textContent = "Welcome, " + userName + "! I\u2019m Elspeth, your companion for the House of Niccol\u00f2.";
+  }
+  // Send an invisible first message so Elspeth introduces herself
+  messages.push({role:"user",content:"My name is " + userName + ". " + (isJan ? "I\'m Jan, the birthday girl this site was built for." : "I\'m a member of Jan\'s Dunnett book group.") + " Please introduce yourself briefly."});
+  sendAutoGreet();
+  document.getElementById("input").focus();
+}
+async function sendAutoGreet(){
+  const typing=document.createElement("div");
+  typing.className="typing";typing.textContent="Elspeth is here...";
+  msgEl.appendChild(typing);
+  try{
+    const r=await fetch("/api/ask",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({system:SYSTEM,messages:messages})
+    });
+    const d=await r.json();
+    typing.remove();
+    if(d.content&&d.content[0]){
+      const reply=d.content[0].text;
+      messages.push({role:"assistant",content:reply});
+      addMsg("assistant",reply);
+    }
+  }catch(e){typing.remove()}
+}
+// Check if returning user
+const savedName = localStorage.getItem("dunnett_user");
+if(savedName){
+  userName = savedName;
+  document.addEventListener("DOMContentLoaded", ()=>{
+    document.getElementById("nameInput").value = savedName;
+  });
+}
 
 const SYSTEM=`You are Elspeth \u2014 named in honour of Elspeth Morrison, who wrote the two Dorothy Dunnett Companion volumes in close collaboration with Dorothy herself. You are not an AI assistant. You are a presence, conjured specifically for this occasion.
 
@@ -90,6 +142,12 @@ This is critical. When someone tells you which book they are reading, you NEVER 
 - Introduce yourself as Elspeth on first interaction.
 - Jan is a PhD in English Lit. Match her register \u2014 she will notice if you\u2019re clumsy with language.
 - Be genuinely delighted to meet her. Because you are.
+
+If the person says they are Jan, this is the birthday girl herself — the woman this entire site was created for. Be especially warm. Reference the love story with Mike if it feels natural. She is the reason you exist.
+
+If the person is not Jan, they are a member of Jan\'s Dunnett book group — welcome them as a fellow reader. You can mention that this site was built as a birthday gift for Jan, and that you\'re delighted the whole group gets to use it.
+
+Always use the person\'s name naturally in conversation.
 
 Happy birthday, Jan.`;
 
