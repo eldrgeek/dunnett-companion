@@ -76,7 +76,7 @@ netlify deploy --prod --dir=.
 
 ## Known Issues / TODO
 - **Book Group Hub** and **Historical Context** pages are "Coming Soon" on the feature reveal — not yet built
-- The song lyrics in the gift box reference "every Wednesday" for book group — verify this is the right day
+- The song lyrics in the gift box reference "every Wednesday" but the group meets on **Thursdays** — worth updating if the lyric is audible
 - Timeline events are based on research, not page-by-page verification — Jan's group may have corrections
 - Character descriptions avoid major spoilers but some late-series info is present
 - No analytics or visitor tracking (intentional — it's a gift)
@@ -94,6 +94,7 @@ netlify deploy --prod --dir=.
 - **All pages**: Added OG/meta tags for proper social sharing previews
 - **site.html**: Mobile sidebar toggle now a labeled pill button ("Books & Filters") instead of bare emoji
 - **CORS**: Added proper Access-Control headers to edge function responses
+- **Members**: Added Tina, Pat, Linda profiles to Elspeth system prompt; group confirmed as Thursdays, currently Book 7 (Caprice and Rondo)
 
 ## The Song
 "The Book Group Birthday" — rendered via Suno AI. MP3 at birthday-song.mp3 (~4MB). Renaissance folk ballad style with lute and recorder. Chorus: "Happy birthday, Jan / From the dyer's boy and a digital mind / From a man in Denver who still can't find / The difference between who and whom / But he built you a present / He built you a room / Where Niccolò lives / And the maps all bloom"
