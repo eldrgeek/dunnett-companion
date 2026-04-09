@@ -3,21 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The House of Niccolò — Timeline</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet">
+<title>Timeline — The House of Niccolò</title>
+<meta name="description" content="Forty-three years in the life of Nicholas de Fleury, 1460–1503. A visual timeline of events across all eight books in Dorothy Dunnett's House of Niccolò series.">
+<meta property="og:title" content="Timeline — The House of Niccolò">
+<meta property="og:description" content="Follow Nicholas de Fleury from Bruges apprentice to merchant prince across 43 years and 8 books.">
+<meta property="og:url" content="https://dunnett.netlify.app/timeline.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The House of Niccolò">
+<link rel="stylesheet" href="styles.css">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--burgundy:#6B1D2A;--burgundy-deep:#4A0E1C;--gold:#C9A84C;--gold-light:#E8D48B;--cream:#FDF8F0;--cream-dark:#F0E6D3;--ink:#2A1A1A;--ink-light:#5A3A3A}
-html,body{min-height:100%;font-family:'EB Garamond',serif;background:var(--cream)}
-.top-nav{background:var(--burgundy-deep);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:0;right:0;z-index:1000;box-shadow:0 2px 12px rgba(0,0,0,0.3)}
-.nav-title{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);letter-spacing:1px;font-weight:700}
-.nav-links{display:flex;gap:24px}
-.nav-links a{font-family:'Cormorant Garamond',serif;color:var(--gold-light);text-decoration:none;font-size:15px;letter-spacing:1px;text-transform:uppercase;opacity:0.8;transition:opacity 0.2s}
-.nav-links a:hover,.nav-links a.active{opacity:1;border-bottom:1px solid var(--gold)}
-.nav-home{font-size:18px;text-decoration:none;margin-right:8px}
-.page-header{text-align:center;padding:80px 24px 30px;background:linear-gradient(180deg,var(--burgundy-deep) 0%,var(--burgundy) 70%,transparent 100%)}
-.page-header h1{font-family:'Playfair Display',serif;font-size:42px;color:var(--gold);letter-spacing:2px}
-.page-header p{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold-light);font-style:italic;margin-top:8px;opacity:0.85}
 .filter-bar{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;padding:20px 24px;max-width:900px;margin:0 auto}
 .filter-pill{font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:1px;padding:5px 14px;border-radius:20px;border:1px solid var(--cream-dark);background:white;cursor:pointer;transition:all 0.2s;color:var(--ink-light);display:flex;align-items:center;gap:6px}
 .filter-pill .dot{width:8px;height:8px;border-radius:50%}
@@ -36,7 +30,7 @@ html,body{min-height:100%;font-family:'EB Garamond',serif;background:var(--cream
 .event .location{font-family:'Cormorant Garamond',serif;font-size:12px;color:var(--gold);margin-bottom:6px;font-style:italic}
 .event p{font-size:14px;color:var(--ink-light);line-height:1.5}
 .event .hist{font-size:11px;color:#8A7030;margin-top:6px;font-style:italic;border-top:1px solid var(--cream-dark);padding-top:6px}
-.map-footer{text-align:center;padding:16px;font-family:'Cormorant Garamond',serif;font-size:12px;color:var(--ink-light);font-style:italic;border-top:1px solid var(--cream-dark)}
+
 @media(max-width:700px){.timeline::before{left:20px}.event{width:calc(100% - 50px)!important;margin-left:50px!important}.year-marker{text-align:left;padding-left:0}}
 </style>
 </head>

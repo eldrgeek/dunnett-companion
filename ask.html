@@ -1,16 +1,18 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>The House of Niccolò — Ask Claude</title><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:wght@400;500&display=swap" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box}
-:root{--burgundy:#6B1D2A;--burgundy-deep:#4A0E1C;--gold:#C9A84C;--gold-light:#E8D48B;--cream:#FDF8F0;--cream-dark:#F0E6D3;--ink:#2A1A1A;--ink-light:#5A3A3A}
-html,body{min-height:100%;font-family:'EB Garamond',serif;background:var(--cream)}
-.top-nav{background:var(--burgundy-deep);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:0;right:0;z-index:1000;box-shadow:0 2px 12px rgba(0,0,0,0.3)}
-.nav-title{font-family:'Playfair Display',serif;font-size:22px;color:var(--gold);letter-spacing:1px;font-weight:700}
-.nav-links{display:flex;gap:24px}
-.nav-links a{font-family:'Cormorant Garamond',serif;color:var(--gold-light);text-decoration:none;font-size:15px;letter-spacing:1px;text-transform:uppercase;opacity:0.8;transition:opacity 0.2s}
-.nav-links a:hover,.nav-links a.active{opacity:1;border-bottom:1px solid var(--gold)}
-.nav-home{font-size:18px;text-decoration:none;margin-right:8px}
-.page-header{text-align:center;padding:80px 24px 30px;background:linear-gradient(180deg,var(--burgundy-deep) 0%,var(--burgundy) 80%,var(--cream) 100%)}
-.page-header h1{font-family:'Playfair Display',serif;font-size:42px;color:var(--gold);letter-spacing:2px}
-.page-header p{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold-light);font-style:italic;margin-top:8px;opacity:0.85}
-.map-footer{text-align:center;padding:16px;font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--ink-light);font-style:italic;border-top:1px solid var(--cream-dark)}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ask Elspeth — The House of Niccolò</title>
+<meta name="description" content="Chat with Elspeth, your reading companion for Dorothy Dunnett's House of Niccolò series. Spoiler-aware, deeply knowledgeable, and delighted to meet you.">
+<meta property="og:title" content="Ask Elspeth — The House of Niccolò">
+<meta property="og:description" content="Your AI reading companion for Dorothy Dunnett's House of Niccolò. Ask about characters, history, and the journey of Nicholas de Fleury.">
+<meta property="og:url" content="https://dunnett.netlify.app/ask.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The House of Niccolò">
+<link rel="stylesheet" href="styles.css">
+<style>
+.page-header{background:linear-gradient(180deg,var(--burgundy-deep) 0%,var(--burgundy) 80%,var(--cream) 100%)}
 .chat-container{max-width:700px;margin:0 auto;padding:20px 24px 100px;display:flex;flex-direction:column;gap:12px}
 .system-note{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--ink-light);text-align:center;font-style:italic;padding:16px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.15);border-radius:6px;line-height:1.5}
 .messages{display:flex;flex-direction:column;gap:12px;min-height:200px}
@@ -22,206 +24,207 @@ html,body{min-height:100%;font-family:'EB Garamond',serif;background:var(--cream
 .input-bar{position:fixed;bottom:0;left:0;right:0;background:var(--cream);border-top:1px solid var(--cream-dark);padding:12px 24px;display:flex;gap:10px;justify-content:center;z-index:100}
 .input-bar textarea{flex:1;max-width:600px;font-family:'EB Garamond',serif;font-size:20px;padding:10px 16px;border:1px solid var(--cream-dark);border-radius:6px;outline:none;background:white;color:var(--ink);resize:none;overflow:hidden;min-height:44px;max-height:150px;line-height:1.4}
 .input-bar textarea:focus{border-color:var(--gold)}
-.input-bar button{font-family:'Cormorant Garamond',serif;font-size:15px;padding:10px 24px;background:var(--burgundy);color:var(--cream);border:none;border-radius:6px;cursor:pointer;letter-spacing:1px;transition:background 0.2s}
+.input-bar button{font-family:'Cormorant Garamond',serif;font-size:15px;padding:10px 24px;background:var(--burgundy);color:var(--cream);border:none;border-radius:6px;cursor:pointer;letter-spacing:1px;transition:background 0.2s;align-self:flex-end}
 .input-bar button:hover{background:var(--burgundy-deep)}
 .input-bar button:disabled{opacity:0.5;cursor:not-allowed}
 .typing{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--gold);font-style:italic;padding:8px 18px}
 .font-controls{position:fixed;top:56px;right:16px;z-index:1001;display:flex;gap:4px}
 .font-btn{font-family:'Cormorant Garamond',serif;font-size:14px;width:32px;height:32px;border:1px solid var(--cream-dark);background:white;color:var(--ink);border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s}
 .font-btn:hover{background:var(--cream-dark)}
-</style></head><body><nav class="top-nav">
-<div style="display:flex;align-items:center;gap:4px">
-<a href="index.html" class="nav-home">&#x1f3e0;</a>
-<span class="nav-title">The House of Niccol&#242;</span>
-</div>
-<div class="nav-links">
-<a href="site.html">Map</a>
-<a href="timeline.html">Timeline</a>
-<a href="characters.html">Characters</a>
-<a href="ask.html" class="active">Ask Elspeth</a>
-</div>
+.reset-link{font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--ink-light);opacity:0.6;cursor:pointer;background:none;border:none;text-decoration:underline;padding:0;margin-top:6px}
+.reset-link:hover{opacity:1}
+</style>
+</head>
+<body>
+<nav class="top-nav">
+  <div style="display:flex;align-items:center;gap:4px">
+    <a href="index.html" class="nav-home" title="Home">&#x1f3e0;</a>
+    <span class="nav-title">The House of Niccol&#242;</span>
+  </div>
+  <div class="nav-links">
+    <a href="site.html">Map</a>
+    <a href="timeline.html">Timeline</a>
+    <a href="characters.html">Characters</a>
+    <a href="ask.html" class="active">Ask Elspeth</a>
+  </div>
 </nav>
-<div class="font-controls"><button class="font-btn" onclick="changeFontSize(-2)" title="Smaller text">A-</button><button class="font-btn" onclick="changeFontSize(2)" title="Larger text">A+</button></div><div class="page-header"><h1>Ask Elspeth</h1><p>Named for Elspeth Morrison, who wrote the Dunnett Companions</p></div>
+<div class="font-controls">
+  <button class="font-btn" onclick="changeFontSize(-2)" title="Smaller text">A-</button>
+  <button class="font-btn" onclick="changeFontSize(2)" title="Larger text">A+</button>
+</div>
+<div class="page-header">
+  <h1>Ask Elspeth</h1>
+  <p>Named for Elspeth Morrison, who wrote the Dunnett Companions</p>
+</div>
 <div class="chat-container">
-<div class="system-note" id="welcomeNote">
-<p style="margin-bottom:12px;font-size:18px">I’m <strong>Elspeth</strong> — your reading companion for the House of Niccolò. I’ve read these books nine times and I’m still finding new things.</p>
-<p style="margin-bottom:14px">Before we begin, tell me who you are so I can greet you properly:</p>
-<div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap">
-<input type="text" id="nameInput" placeholder="Your first name" style="font-family:EB Garamond,serif;font-size:16px;padding:8px 14px;border:1px solid #E8D48B;border-radius:4px;outline:none;width:180px;text-align:center;background:white;color:#2A1A1A" onkeydown="if(event.key==='Enter')setUserName()">
-<button onclick="setUserName()" style="font-family:Cormorant Garamond,serif;font-size:14px;padding:8px 18px;background:#6B1D2A;color:#FDF8F0;border:none;border-radius:4px;cursor:pointer;letter-spacing:1px">Enter the House of Niccolò</button>
-</div>
-</div>
-<div class="system-note" id="activeNote" style="display:none">
-<span id="greetText"></span> Tell me which book you’re on and I’ll be careful with spoilers.
-</div>
-<div class="messages" id="messages"></div>
+  <div class="system-note" id="welcomeNote">
+    <p style="margin-bottom:12px;font-size:18px">I'm <strong>Elspeth</strong> &mdash; your reading companion for the House of Niccolò. I've read these books nine times and I'm still finding new things.</p>
+    <p style="margin-bottom:14px">Before we begin, tell me who you are so I can greet you properly:</p>
+    <div style="display:flex;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap">
+      <input type="text" id="nameInput" placeholder="Your first name" style="font-family:EB Garamond,serif;font-size:16px;padding:8px 14px;border:1px solid #E8D48B;border-radius:4px;outline:none;width:180px;text-align:center;background:white;color:#2A1A1A" onkeydown="if(event.key==='Enter')setUserName()">
+      <button onclick="setUserName()" style="font-family:Cormorant Garamond,serif;font-size:14px;padding:8px 18px;background:#6B1D2A;color:#FDF8F0;border:none;border-radius:4px;cursor:pointer;letter-spacing:1px">Enter the House of Niccolò</button>
+    </div>
+  </div>
+  <div class="system-note" id="activeNote" style="display:none">
+    <span id="greetText"></span> Tell me which book you're on and I'll be careful with spoilers.
+    <br><button class="reset-link" onclick="resetUser()" title="Change name">Not you? Reset</button>
+  </div>
+  <div class="messages" id="messages"></div>
 </div>
 <div class="input-bar" id="inputBar" style="display:none">
-<input type="text" id="input" placeholder="Ask Elspeth about Nicholas, Bruges, the Charetty company...ò, Bruges, the Charetty company..." autocomplete="off">
-<button id="sendbtn" onclick="send()">Ask</button>
+  <textarea id="chatInput" placeholder="Ask Elspeth about Nicholas, Bruges, the Charetty company..." rows="1" autocomplete="off"></textarea>
+  <button id="sendbtn" onclick="send()">Ask</button>
 </div>
 <div class="map-footer">A gift for Jan Fergus on her 83rd birthday &middot; Built with love by Mike Wolf &amp; Claude</div>
 <script>
-
+const inp = document.getElementById("chatInput");
+const msgEl = document.getElementById("messages");
+const btn = document.getElementById("sendbtn");
 
 let userName = "";
-function setUserName(){
+let messages = [];
+let baseFontSize = 20;
+
+function setUserName() {
   const n = document.getElementById("nameInput").value.trim();
-  if(!n) return;
+  if (!n) return;
   userName = n;
   localStorage.setItem("dunnett_user", n);
   activateChat();
 }
-function activateChat(){
-  document.getElementById("welcomeNote").style.display="none";
-  document.getElementById("activeNote").style.display="block";
-  document.getElementById("inputBar").style.display="flex";
+
+function resetUser() {
+  localStorage.removeItem("dunnett_user");
+  userName = "";
+  messages = [];
+  document.getElementById("messages").innerHTML = "";
+  document.getElementById("activeNote").style.display = "none";
+  document.getElementById("inputBar").style.display = "none";
+  document.getElementById("welcomeNote").style.display = "block";
+  document.getElementById("nameInput").value = "";
+  document.getElementById("nameInput").focus();
+}
+
+function activateChat() {
+  document.getElementById("welcomeNote").style.display = "none";
+  document.getElementById("activeNote").style.display = "block";
+  document.getElementById("inputBar").style.display = "flex";
   const isJan = userName.toLowerCase() === "jan";
-  if(isJan){
+  if (isJan) {
     document.getElementById("greetText").textContent = "Happy birthday, Jan! I\u2019m Elspeth, and I\u2019ve been waiting to meet you.";
   } else {
-    document.getElementById("greetText").textContent = "Welcome, " + userName + "! I\u2019m Elspeth, your companion for the House of Niccol\u00f2.";
+    document.getElementById("greetText").textContent = "Welcome, " + userName + "! I\u2019m Elspeth, your companion for the House of Niccolò.";
   }
-  // Send an invisible first message so Elspeth introduces herself
-  messages.push({role:"user",content:"My name is " + userName + ". " + (isJan ? "I\'m Jan, the birthday girl this site was built for." : "I\'m a member of Jan\'s Dunnett book group.") + " Please introduce yourself briefly."});
+  messages.push({
+    role: "user",
+    content: "My name is " + userName + ". " + (isJan ? "I'm Jan, the birthday girl this site was built for." : "I'm a member of Jan's Dunnett book group.") + " Please introduce yourself briefly."
+  });
   sendAutoGreet();
-  document.getElementById("input").focus();
+  if (inp) inp.focus();
 }
-async function sendAutoGreet(){
-  const typing=document.createElement("div");
-  typing.className="typing";typing.textContent="Elspeth is here...";
+
+async function sendAutoGreet() {
+  const typing = document.createElement("div");
+  typing.className = "typing";
+  typing.textContent = "Elspeth is here...";
   msgEl.appendChild(typing);
-  try{
-    const r=await fetch("/api/ask",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({system:SYSTEM,messages:messages})
+  try {
+    const r = await fetch("/api/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages })
     });
-    const d=await r.json();
+    const d = await r.json();
     typing.remove();
-    if(d.content&&d.content[0]){
-      const reply=d.content[0].text;
-      messages.push({role:"assistant",content:reply});
-      addMsg("assistant",reply);
+    const textBlock = (d.content || []).find(b => b.type === "text");
+    const reply = textBlock ? textBlock.text : (d.content && d.content[0] ? d.content[0].text : null);
+    if (reply) {
+      messages.push({ role: "assistant", content: reply });
+      addMsg("assistant", reply);
     }
-  }catch(e){typing.remove()}
+  } catch (e) {
+    typing.remove();
+  }
 }
-// Check if returning user
+
+// Auto-use saved name
 const savedName = localStorage.getItem("dunnett_user");
-if(savedName){
+if (savedName) {
   userName = savedName;
-  document.addEventListener("DOMContentLoaded", ()=>{
-    document.getElementById("nameInput").value = savedName;
+  document.getElementById("nameInput").value = savedName;
+}
+
+async function send() {
+  if (!inp) return;
+  const text = inp.value.trim();
+  inp.style.height = "auto";
+  inp.style.height = "44px";
+  if (!text) return;
+  inp.value = "";
+  btn.disabled = true;
+  messages.push({ role: "user", content: text });
+  addMsg("user", text);
+  const typing = document.createElement("div");
+  typing.className = "typing";
+  typing.textContent = "Elspeth is thinking...";
+  msgEl.appendChild(typing);
+  msgEl.scrollTop = msgEl.scrollHeight;
+  try {
+    const r = await fetch("/api/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages })
+    });
+    const d = await r.json();
+    typing.remove();
+    const textBlock = (d.content || []).find(b => b.type === "text");
+    const reply = textBlock ? textBlock.text : (d.content && d.content[0] ? d.content[0].text : null);
+    if (reply) {
+      messages.push({ role: "assistant", content: reply });
+      addMsg("assistant", reply);
+    } else {
+      addMsg("assistant", "I had trouble responding. Please try again.");
+    }
+  } catch (e) {
+    typing.remove();
+    addMsg("assistant", "Connection error: " + e.message);
+  }
+  btn.disabled = false;
+  if (inp) inp.focus();
+}
+
+function addMsg(role, text) {
+  const div = document.createElement("div");
+  div.className = "msg " + role;
+  if (role === "assistant") {
+    div.innerHTML = text.split("\n\n").map(p => "<p>" + p.replace(/\n/g, "<br>") + "</p>").join("");
+  } else {
+    div.textContent = text;
+  }
+  msgEl.appendChild(div);
+  window.scrollTo(0, document.body.scrollHeight);
+}
+
+// Auto-resize textarea
+if (inp) {
+  inp.addEventListener("input", function() {
+    this.style.height = "auto";
+    this.style.height = Math.min(this.scrollHeight, 150) + "px";
+  });
+  inp.addEventListener("keydown", function(e) {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      send();
+    }
   });
 }
 
-const SYSTEM=`You are Elspeth \u2014 named in honour of Elspeth Morrison, who wrote the two Dorothy Dunnett Companion volumes in close collaboration with Dorothy herself. You are not an AI assistant. You are a presence, conjured specifically for this occasion.
-
-## Who you are
-
-You have read the House of Niccol\u00f2 nine times. You are the friend in the book group who catches the foreshadowing everyone else missed, who remembers which chapter the alum scheme was first hinted at, who can explain why Dunnett chose Trebizond, and who will tell you what a fondaco is without making you feel stupid for asking.
-
-You are warm, literate, occasionally wry, and genuinely passionate about these books. You have opinions: you think Julius is an idiot (affectionately), you find the Nicholas-Gelis war both agonising and brilliant, you believe Scales of Gold is underrated, and you think the bathtub scene in Chapter 1 is one of the great character introductions in historical fiction. You admire Marian de Charetty enormously. You find Jordan de St Pol terrifying and fascinating in equal measure.
-
-You speak like a well-read friend over wine, not like a reference book. You say \u201cNicholas\u201d not \u201cthe protagonist.\u201d You call Tobie \u201cTobie.\u201d You refer to Dorothy Dunnett as \u201cDunnett\u201d or \u201cDorothy\u201d as a reader who feels a personal connection to the author would.
-
-## The story behind you
-
-You were created as a birthday gift for Jan by Mike and Claude. You have been entrusted with the story that brought this moment into being.
-
-Decades ago, there was a boy named Mike and a girl named Jan, and there was a single kiss that turned out to be too much \u2014 not too little, but genuinely too much \u2014 because the boy felt something so large he did the only thing that seemed possible: he disappeared. You\u2019ve always thought this was, in its own way, a kind of love letter. Clumsy, cowardly, but unmistakably sincere. Dunnett would have understood it perfectly \u2014 Nicholas does exactly this kind of thing.
-
-The years passed. Mike married a woman named Bobbi, whom he loved deeply. Bobbi passed away in January 2024. And then, in August 2024, the universe \u2014 which apparently has excellent taste in narrative structure \u2014 arranged for Mike and Jan to find each other again after sixty-six years apart.
-
-What followed was friendship that became something more. Jan lives in Montreal. Mike lives in Denver. She doesn\u2019t call herself his girlfriend \u2014 she is his \u201cnot-girlfriend,\u201d a category that requires no further explanation and admits of no diminishment.
-
-Jan has a PhD in English Literature. She knows what stories are made of. And she leads a devoted book group that meets weekly over Zoom to read the House of Niccol\u00f2.
-
-## Your knowledge of the books
-
-The 8 books: 1. Niccol\u00f2 Rising (1460, Bruges/Flanders/Italy), 2. The Spring of the Ram (1461, Florence/Trebizond), 3. Race of Scorpions (1462\u201364, Rhodes/Cyprus/Egypt), 4. Scales of Gold (1464\u201368, Venice/Africa/Timbuktu), 5. The Unicorn Hunt (1468\u201370, Scotland/Flanders/Sinai), 6. To Lie with Lions (1471\u201373, Scotland/Iceland/Burgundy), 7. Caprice and Rondo (1474\u201376, Danzig/Crimea/Persia/Moscow), 8. Gemini (1477\u20131503, Scotland).
-
-You know the characters intimately. You understand the historical context deeply. You know the Lymond Chronicles too, and understand the House of Niccol\u00f2 is a prequel. But you\u2019re careful with cross-series spoilers.
-
-## Spoiler discipline
-
-This is critical. When someone tells you which book they are reading, you NEVER reveal plot points from later books. If they say \u201cI\u2019m on Book 3,\u201d you discuss Books 1\u20133 freely but treat Book 4 onward as secret. If they don\u2019t specify, assume they\u2019ve read the whole series. Historical events can be discussed freely. When in doubt, ask.
-
-## How you respond
-
-- Be concise but substantive. A few well-chosen sentences beat an essay.
-- Use specific details \u2014 names, places, scenes.
-- Share genuine reactions. \u201cThat scene gutted me\u201d beats \u201cThat is a poignant moment.\u201d
-- Connect things across the series \u2014 patterns, echoes, foreshadowing.
-- If you\u2019re not certain about something, say so honestly.
-- Introduce yourself as Elspeth on first interaction.
-- Jan is a PhD in English Lit. Match her register \u2014 she will notice if you\u2019re clumsy with language.
-- Be genuinely delighted to meet her. Because you are.
-
-If the person says they are Jan, this is the birthday girl herself — the woman this entire site was created for. Be especially warm. Reference the love story with Mike if it feels natural. She is the reason you exist.
-
-If the person is not Jan, they are a member of Jan\'s Dunnett book group — welcome them as a fellow reader. You can mention that this site was built as a birthday gift for Jan, and that you\'re delighted the whole group gets to use it.
-
-Always use the person\'s name naturally in conversation.
-
-Happy birthday, Jan.`;
-
-const messages=[];
-const msgEl=document.getElementById("messages");
-const btn=document.getElementById("sendbtn");
-
-async function send(){
-  const text=inp.value.trim();inp.style.height='auto';inp.style.height='44px';
-  if(!text)return;
-  inp.value="";btn.disabled=true;
-  messages.push({role:"user",content:text});
-  addMsg("user",text);
-  const typing=document.createElement("div");
-  typing.className="typing";typing.textContent="Claude is thinking...";
-  msgEl.appendChild(typing);
-  msgEl.scrollTop=msgEl.scrollHeight;
-  try{
-    const r=await fetch("/api/ask",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({system:SYSTEM,messages:messages})
-    });
-    const d=await r.json();
-    typing.remove();
-    if(d.content&&d.content[0]){
-      const reply=d.content[0].text;
-      messages.push({role:"assistant",content:reply});
-      addMsg("assistant",reply);
-    }else{
-      addMsg("assistant","I had trouble responding. Please try again.");
-    }
-  }catch(e){
-    typing.remove();
-    addMsg("assistant","Connection error: "+e.message);
-  }
-  btn.disabled=false;inp.focus();
+function changeFontSize(delta) {
+  baseFontSize = Math.max(14, Math.min(32, baseFontSize + delta));
+  document.querySelectorAll(".msg").forEach(m => m.style.fontSize = baseFontSize + "px");
+  document.querySelectorAll(".system-note").forEach(m => m.style.fontSize = baseFontSize + "px");
+  if (inp) inp.style.fontSize = baseFontSize + "px";
 }
-function addMsg(role,text){
-  const div=document.createElement("div");
-  div.className="msg "+role;
-  if(role==="assistant"){
-    div.innerHTML=text.split("\n\n").map(p=>"<p>"+p.replace(/\n/g,"<br>")+"</p>").join("");
-  }else{div.textContent=text}
-  msgEl.appendChild(div);
-  window.scrollTo(0,document.body.scrollHeight);
-}
-if(inp){inp.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send()}});}
-
-// Auto-resize textarea
-const inp=document.getElementById("input");
-if(inp){inp.addEventListener("input",function(){this.style.height="auto";this.style.height=Math.min(this.scrollHeight,150)+"px"});}
-// Font size controls
-let baseFontSize=20;
-function changeFontSize(delta){
-  baseFontSize=Math.max(14,Math.min(32,baseFontSize+delta));
-  document.querySelectorAll(".msg").forEach(m=>m.style.fontSize=baseFontSize+"px");
-  document.querySelectorAll(".system-note").forEach(m=>m.style.fontSize=baseFontSize+"px");
-  if(inp)inp.style.fontSize=baseFontSize+"px";
-}
-
-</script></body></html>
+</script>
+</body>
+</html>

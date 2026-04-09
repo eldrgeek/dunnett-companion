@@ -79,8 +79,21 @@ netlify deploy --prod --dir=.
 - The song lyrics in the gift box reference "every Wednesday" for book group — verify this is the right day
 - Timeline events are based on research, not page-by-page verification — Jan's group may have corrections
 - Character descriptions avoid major spoilers but some late-series info is present
-- Mobile sidebar toggle on map page could be more prominent
 - No analytics or visitor tracking (intentional — it's a gift)
+
+## Recent Changes (April 2026)
+- **Security**: System prompt moved server-side (edge function); no longer exposed in client JS
+- **Model**: Switched from claude-sonnet-4-20250514 to claude-haiku-4-5-20251001 (faster + cheaper)
+- **Web search**: Added web_search_20250305 tool to Elspeth — she can look up historical facts
+- **ask.html**: Fixed input bar (was <input>, now proper <textarea> with auto-resize)
+- **ask.html**: Fixed duplicate placeholder text bug
+- **ask.html**: Added "Not you? Reset" link so users can change their name
+- **ask.html**: Removed client-side SYSTEM constant (now only lives in edge function)
+- **ask.html**: Fixed "Claude is thinking" → "Elspeth is thinking"
+- **styles.css**: Created shared stylesheet — :root vars, nav, header, footer no longer duplicated
+- **All pages**: Added OG/meta tags for proper social sharing previews
+- **site.html**: Mobile sidebar toggle now a labeled pill button ("Books & Filters") instead of bare emoji
+- **CORS**: Added proper Access-Control headers to edge function responses
 
 ## The Song
 "The Book Group Birthday" — rendered via Suno AI. MP3 at birthday-song.mp3 (~4MB). Renaissance folk ballad style with lute and recorder. Chorus: "Happy birthday, Jan / From the dyer's boy and a digital mind / From a man in Denver who still can't find / The difference between who and whom / But he built you a present / He built you a room / Where Niccolò lives / And the maps all bloom"
@@ -93,4 +106,4 @@ netlify deploy --prod --dir=.
 - GitHub push was blocked once by secrets scanning (hardcoded API key) — now uses Netlify env var
 
 ## Elspeth System Prompt Location
-The full system prompt is in ask.html inside a `const SYSTEM=\`...\`;` JS template literal. It's ~2000 words. Key sections: Who you are, The story behind you (Mike/Jan love story), Your knowledge of the books, Spoiler discipline, How you respond, Community awareness (Jan vs book group members).
+The system prompt now lives **server-side only** in `netlify/edge-functions/ask-claude.ts` as `const SYSTEM_PROMPT = \`...\`;`. It is NOT in ask.html anymore. This prevents users from reading or overriding it via the browser console. Key sections: Who you are, The story behind you (Mike/Jan love story), Your knowledge of the books, Spoiler discipline (critical — check book number before answering), How you respond, Community awareness (Jan vs book group members), Web search guidance.
