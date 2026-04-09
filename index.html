@@ -91,6 +91,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--burgundy-deep)
 .progress-fill{height:100%;background:var(--gold);border-radius:3px;width:0%;transition:width 0.1s linear}
 .time-display{font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--gold-light);min-width:36px;text-align:right}
 </style>
+<script src="music.js"></script>
 </head>
 <body>
 <div id="gift-scene">
@@ -155,7 +156,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--burgundy-deep)
 <script>
 function createParticles(){const s=document.getElementById('gift-scene');for(let i=0;i<30;i++){const p=document.createElement('div');p.className='particle';p.style.left=Math.random()*100+'%';p.style.top=(40+Math.random()*50)+'%';p.style.animationDelay=(Math.random()*4)+'s';p.style.animationDuration=(3+Math.random()*3)+'s';p.style.width=p.style.height=(2+Math.random()*4)+'px';s.appendChild(p)}}
 createParticles();
-function openGift(){const g=document.getElementById('gift');if(g.classList.contains('opening'))return;g.classList.add('opening');setTimeout(()=>{document.getElementById('gift-scene').classList.add('opened');setTimeout(()=>{document.getElementById('song-scene').classList.add('active');try{audio.play();playBtn.innerHTML='\u275a\u275a Pause'}catch(e){}},600)},1500)}
+function openGift(){const g=document.getElementById('gift');if(g.classList.contains('opening'))return;g.classList.add('opening');setTimeout(()=>{document.getElementById('gift-scene').classList.add('opened');setTimeout(()=>{document.getElementById('song-scene').classList.add('active');try{audio.play();playBtn.innerHTML='\u275a\u275a Pause';if(window.dunnettMusicStart)window.dunnettMusicStart();}catch(e){}},600)},1500)}
 function showReveal(){document.getElementById('song-scene').classList.remove('active');setTimeout(()=>{document.getElementById('reveal-scene').classList.add('active');setTimeout(animateCards,300)},500)}
 function animateCards(){const c=document.querySelectorAll('.feature-card');c.forEach((card,i)=>{setTimeout(()=>{card.classList.add('visible')},i*150)})}
 function enterSite(){window.location.href='site.html'}
@@ -167,8 +168,15 @@ const timeDisplay=document.getElementById('timeDisplay');
 
 function togglePlay(){
 if(!audio)return;
-if(audio.paused){audio.play();playBtn.innerHTML='&#10074;&#10074; Pause'}
-else{audio.pause();playBtn.innerHTML='&#9654; Play'}
+if(audio.paused){
+  audio.play();
+  playBtn.innerHTML='&#10074;&#10074; Pause';
+  if(window.dunnettMusicResume)window.dunnettMusicResume(audio.currentTime);
+}else{
+  audio.pause();
+  playBtn.innerHTML='&#9654; Play';
+  if(window.dunnettMusicPause)window.dunnettMusicPause(audio.currentTime);
+}
 }
 function seekAudio(e){
 if(!audio||!audio.duration)return;
@@ -186,7 +194,7 @@ const m=Math.floor(audio.currentTime/60);
 const s=Math.floor(audio.currentTime%60);
 timeDisplay.textContent=m+':'+(s<10?'0':'')+s;
 });
-audio.addEventListener('ended',()=>{playBtn.innerHTML='&#9654; Play Again'});
+audio.addEventListener('ended',()=>{playBtn.innerHTML='&#9654; Play Again';if(window.dunnettMusicEnded)window.dunnettMusicEnded();});
 }
 
 </script>

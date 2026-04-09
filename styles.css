@@ -97,3 +97,19 @@ html, body {
   font-style: italic;
   border-top: 1px solid var(--cream-dark);
 }
+
+/* ── Music toggle button (in nav) ── */
+.music-nav-btn {
+  background: none;
+  border: none;
+  color: var(--gold-light);
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0.75;
+  padding: 0 0 0 4px;
+  line-height: 1;
+  transition: opacity 0.2s, transform 0.2s;
+  vertical-align: middle;
+}
+.music-nav-btn:hover { opacity: 1; transform: scale(1.15); }
+.music-nav-btn.muted { opacity: 0.35; }
